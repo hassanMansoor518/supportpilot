@@ -8,7 +8,7 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: "ChatEmbed | AI Customer Support for Every Website",
+  title: "SupportPilot | AI Customer Support for Every Website",
   description: "Train your AI chatbot with your data and embed it anywhere.",
 }
 

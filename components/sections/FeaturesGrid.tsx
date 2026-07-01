@@ -1,6 +1,8 @@
+"use client"
 import React from "react"
 import { FileText, Code2, MessageSquare, UserPlus, BarChart3, Users } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
+import { motion } from "framer-motion"
 
 export function FeaturesGrid() {
   const features = [
@@ -40,34 +42,56 @@ export function FeaturesGrid() {
   return (
     <section className="py-15">
       <div className="container mx-auto px-4">
-        <div className="text-center max-w-3xl mx-auto mb-16 relative">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.6 }}
+          className="text-center max-w-3xl mx-auto mb-16 relative"
+        >
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-primary/10 blur-[100px] rounded-full pointer-events-none mix-blend-screen" />
           <p className="text-primary font-bold text-[0.85rem] tracking-[0.2em] uppercase mb-4">POWERFUL FEATURES</p>
           <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight mb-6">Everything you need to deliver <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-purple-400">amazing support</span></h2>
           <p className="text-muted-foreground text-sm leading-relaxed max-w-2xl mx-auto relative z-10">All the tools you need to build, train, and deploy an AI chatbot that perfectly understands your business context.</p>
-        </div>
+        </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-4 relative z-10">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+          variants={{
+            visible: { transition: { staggerChildren: 0.1 } }
+          }}
+          className="grid md:grid-cols-2 lg:grid-cols-5 gap-4 relative z-10"
+        >
           {features.map((feature, i) => (
-            <Card key={i} className="bg-white/[0.02] border-white/5 hover:bg-white/[0.04] hover:border-white/10 transition-all duration-300 backdrop-blur-sm group overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-              <CardHeader>
-                <div className={`w-12 h-12 rounded-xl ${feature.bg} flex items-center justify-center mb-6 shadow-sm ring-1 ring-white/10 group-hover:scale-110 transition-transform duration-300`}>
-                  {feature.icon}
-                </div>
-                <CardTitle className="text-xl font-bold tracking-tight">{feature.title}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-sm text-muted-foreground/80 mb-6 leading-relaxed">
-                  {feature.description}
-                </CardDescription>
-                <a href="#" className="text-sm text-primary font-semibold hover:text-purple-400 flex items-center gap-2 group/link">
-                  Learn more <span className="group-hover/link:translate-x-1 transition-transform">&rarr;</span>
-                </a>
-              </CardContent>
-            </Card>
+            <motion.div
+              key={i}
+              variants={{
+                hidden: { opacity: 0, y: 30 },
+                visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 80, damping: 20 } }
+              }}
+            >
+              <Card className="bg-white/[0.02] border-white/5 hover:bg-white/[0.04] hover:border-white/10 transition-all duration-300 backdrop-blur-sm group overflow-hidden h-full flex flex-col">
+                <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                <CardHeader>
+                  <div className={`w-12 h-12 rounded-xl ${feature.bg} flex items-center justify-center mb-6 shadow-sm ring-1 ring-white/10 group-hover:scale-110 transition-transform duration-300`}>
+                    {feature.icon}
+                  </div>
+                  <CardTitle className="text-xl font-bold tracking-tight">{feature.title}</CardTitle>
+                </CardHeader>
+                <CardContent className="flex-1 flex flex-col">
+                  <CardDescription className="text-sm text-muted-foreground/80 mb-6 leading-relaxed flex-1">
+                    {feature.description}
+                  </CardDescription>
+                  <a href="#" className="text-sm text-primary font-semibold hover:text-purple-400 flex items-center gap-2 group/link w-fit">
+                    Learn more <span className="group-hover/link:translate-x-1 transition-transform">&rarr;</span>
+                  </a>
+                </CardContent>
+              </Card>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   )

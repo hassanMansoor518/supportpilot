@@ -1,11 +1,13 @@
 import React from "react"
 import { Button } from "@/components/ui/button"
 import { BotMessageSquare, ChevronDown } from "lucide-react"
-import { div } from "framer-motion/client"
+import { motion } from "framer-motion"
 
 export function Navbar() {
   return (
-    <nav className="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-md border-b border-border/50">
+    <nav
+
+      className="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-md border-b border-border/50">
       <div className="max-w-[1450px] h-18 flex items-center justify-between">
         <div className="flex items-center pl-10 gap-2">
           <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
