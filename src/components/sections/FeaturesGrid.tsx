@@ -1,7 +1,7 @@
 "use client"
 import React from "react"
 import { FileText, Code2, MessageSquare, UserPlus, BarChart3, Users } from "lucide-react"
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/src/components/ui/card"
 import { motion } from "framer-motion"
 
 export function FeaturesGrid() {

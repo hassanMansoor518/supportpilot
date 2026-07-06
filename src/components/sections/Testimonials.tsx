@@ -1,5 +1,5 @@
 import React from "react"
-import { Card, CardContent } from "@/components/ui/card"
+import { Card, CardContent } from "@/src/components/ui/card"
 import { Star } from "lucide-react"
 
 export function Testimonials() {

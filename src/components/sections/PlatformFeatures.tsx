@@ -104,10 +104,10 @@ export function PlatformFeatures() {
   }
 
   return (
-    <section className="py-24 text-white overflow-hidden relative">
+    <section className="py-24 text-white  relative">
       <div className="container mx-auto px-4 lg:px-8 max-w-7xl relative z-10">
         <div className="flex flex-col lg:flex-row items-center justify-between gap-16 lg:gap-8">
-          
+
           {/* Left Column */}
           <motion.div
             className="w-full lg:w-[32%] space-y-8"
@@ -175,7 +175,7 @@ export function PlatformFeatures() {
                 </div>
                 <div className="pb-2">
                   <div className="w-5 h-5 rounded hover:bg-white/10 flex items-center justify-center cursor-pointer transition-colors">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white/70"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white/70"><path d="M5 12h14" /><path d="M12 5v14" /></svg>
                   </div>
                 </div>
               </div>
@@ -190,20 +190,20 @@ export function PlatformFeatures() {
                     <ChevronRight className="w-4 h-4 text-white/20" />
                   </div>
                   <div className="w-7 h-7 rounded hover:bg-white/10 flex items-center justify-center cursor-pointer transition-colors">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white/70"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white/70"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" /><path d="M3 3v5h5" /></svg>
                   </div>
                 </div>
-                
+
                 {/* Address Input */}
                 <div className="flex-1 h-8 bg-[#1a1a1a] rounded-md flex items-center px-3 text-[13px] text-white/60 font-medium border border-white/5 shadow-inner">
                   <Lock className="w-3.5 h-3.5 mr-2 text-white/40" />
                   yourwebsite.com/faq
                 </div>
-                
+
                 {/* Extension Icons */}
                 <div className="flex gap-1 px-1">
                   <div className="w-7 h-7 rounded hover:bg-white/10 flex items-center justify-center cursor-pointer transition-colors">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white/70"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white/70"><path d="M12 20h9" /><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z" /></svg>
                   </div>
                   <div className="w-7 h-7 rounded bg-[#A259FF]/20 flex items-center justify-center cursor-pointer text-[#A259FF] font-bold text-[10px]">
                     S

@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react"
-import { Button } from "@/components/ui/button"
+import { Button } from "@/src/components/ui/button"
 import { Clock, Code, Play, BotMessageSquare, CheckCircle2, ChevronDown, MessageSquare, Users, BarChart3, Star, MoreHorizontal } from "lucide-react"
 import { motion } from "framer-motion"
 

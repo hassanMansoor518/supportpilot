@@ -1,10 +1,10 @@
 "use client"
 
 import React, { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardFooter, CardHeader } from "@/components/ui/card"
+import { Button } from "@/src/components/ui/button"
+import { Card, CardFooter, CardHeader } from "@/src/components/ui/card"
 import { Check } from "lucide-react"
-import { cn } from "@/lib/utils"
+import { cn } from "@/src/lib/utils"
 
 export function Pricing() {
   const [isYearly, setIsYearly] = useState(false)
@@ -43,10 +43,10 @@ export function Pricing() {
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">Simple, transparent pricing</h2>
           <p className="text-muted-foreground mb-8">Choose the plan that&apos;s right for your business.</p>
-          
+
           <div className="inline-flex items-center p-1 bg-secondary rounded-full border border-border/50">
-             <button className={cn("px-6 py-2 rounded-full text-sm font-medium transition-colors", !isYearly ? "bg-background shadow-sm" : "text-muted-foreground hover:text-foreground")} onClick={() => setIsYearly(false)}>Monthly</button>
-             <button className={cn("px-6 py-2 rounded-full text-sm font-medium transition-colors flex items-center gap-2", isYearly ? "bg-background shadow-sm" : "text-muted-foreground hover:text-foreground")} onClick={() => setIsYearly(true)}>Yearly <span className="text-[10px] bg-green-500/20 text-green-500 px-2 py-0.5 rounded-full uppercase tracking-wider font-bold">Save 20%</span></button>
+            <button className={cn("px-6 py-2 rounded-full text-sm font-medium transition-colors", !isYearly ? "bg-background shadow-sm" : "text-muted-foreground hover:text-foreground")} onClick={() => setIsYearly(false)}>Monthly</button>
+            <button className={cn("px-6 py-2 rounded-full text-sm font-medium transition-colors flex items-center gap-2", isYearly ? "bg-background shadow-sm" : "text-muted-foreground hover:text-foreground")} onClick={() => setIsYearly(true)}>Yearly <span className="text-[10px] bg-green-500/20 text-green-500 px-2 py-0.5 rounded-full uppercase tracking-wider font-bold">Save 20%</span></button>
           </div>
         </div>
 
