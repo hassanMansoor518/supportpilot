@@ -1,11 +1,16 @@
 "use client";
 
-export default function DashboardPage() {
+import DashboardClient from "@/src/components/DashboardClient";
+import { useSession } from "next-auth/react";
 
+export default function page() {
+  const { data: session } = useSession();
+
+  if (!session) return <div>Not authenticated</div>;
 
   return (
     <div>
-      Dashboard Page
+      <DashboardClient ownerId={session.user.id} />
     </div>
   );
 }
