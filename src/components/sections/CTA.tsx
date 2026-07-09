@@ -1,4 +1,5 @@
 import React from "react"
+import Link from "next/link"
 import { Button } from "@/src/components/ui/button"
 import { BotMessageSquare } from "lucide-react"
 
@@ -24,7 +25,9 @@ export function CTA() {
             <div className="w-full md:w-auto shrink-0 flex flex-col gap-4">
               <div className="flex gap-2 w-full max-w-sm">
                 <input type="email" placeholder="Enter your email address" className="flex-1 rounded-lg px-4 py-3 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50" />
-                <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white shadow-lg whitespace-nowrap">Start Free Now &rarr;</Button>
+                <Link href="/register">
+                  <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white shadow-lg whitespace-nowrap">Start Free Now &rarr;</Button>
+                </Link>
               </div>
               <div className="flex items-center gap-4 text-xs text-white/70 justify-center md:justify-start">
                 <span>No credit card required</span>

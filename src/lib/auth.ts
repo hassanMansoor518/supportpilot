@@ -1,124 +1,134 @@
-import { NextAuthOptions } from "next-auth"
-import CredentialsProvider from "next-auth/providers/credentials"
-import connectDb from "./db"
-import User from "../model/user.model"
-import bcrypt from "bcryptjs"
-import Google from "next-auth/providers/google"
+import { NextAuthOptions } from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
+import GoogleProvider from "next-auth/providers/google";
+import GithubProvider from "next-auth/providers/github";
+import connectDb from "./db";
+import User from "../model/user.model";
+import bcrypt from "bcryptjs";
 
-//sign in
-
-//email password
-//email check === user exist
-//check password
-//signin successfully
-// user data
-
-
-
-
-const authOptions: NextAuthOptions = {
+export const authOptions: NextAuthOptions = {
     providers: [
-        //login kaise karoge
         CredentialsProvider({
             name: "Credentials",
             credentials: {
                 email: { label: 'Email', type: 'text' },
                 password: { label: 'Password', type: 'password' }
             },
-            async authorize(credentials, req) {
-                const email = credentials?.email
-                const password = credentials?.password
+            async authorize(credentials) {
+                const email = credentials?.email;
+                const password = credentials?.password;
+                
                 if (!email || !password) {
-                    throw new Error("email or password is not found")
+                    throw new Error("Email and password are required");
                 }
-                await connectDb()
-                const user = await User.findOne({ email })
+                
+                await connectDb();
+                
+                const user = await User.findOne({ email });
+                
                 if (!user) {
-                    throw new Error("user not found")
+                    throw new Error("No user found with this email");
                 }
-                const isMatch = await bcrypt.compare(password, user.password)
+                
+                if (user.provider !== "credentials" && !user.password) {
+                     throw new Error(`Please log in with ${user.provider}`);
+                }
+                
+                const isMatch = await bcrypt.compare(password, user.password);
                 if (!isMatch) {
-                    throw new Error("incorrect Password")
+                    throw new Error("Incorrect password");
+                }
+                
+                if (!user.emailVerified) {
+                    // Optional: You can enforce email verification here
+                    // throw new Error("Please verify your email first");
                 }
 
                 return {
-                    id: user._id,
+                    id: user._id.toString(),
                     name: user.name,
                     email: user.email,
-                    image: user.image
-                }
-
+                    image: user.image,
+                    role: user.role
+                } as any;
             },
         }),
-
-        Google({
+        GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID!,
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET!
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+        }),
+        GithubProvider({
+            clientId: process.env.GITHUB_CLIENT_ID!,
+            clientSecret: process.env.GITHUB_CLIENT_SECRET!,
         })
-
-
-
     ],
     callbacks: {
-        // token ke ander user details daali
         async signIn({ account, user }) {
-            if (account?.provider == "google") {
-                await connectDb()
-                let existUser = await User.findOne({ email: user?.email })
-                if (!existUser) {
-                    existUser = await User.create({
-                        name: user.name,
-                        email: user?.email
-                    })
+            if (account?.provider === "google" || account?.provider === "github") {
+                try {
+                    await connectDb();
+                    let existUser = await User.findOne({ email: user.email });
+                    
+                    if (!existUser) {
+                        existUser = await User.create({
+                            name: user.name,
+                            email: user.email,
+                            image: user.image,
+                            provider: account.provider,
+                            emailVerified: true
+                        });
+                    } else if (existUser.provider !== account.provider) {
+                        // User exists with different provider
+                        // We could throw an error or update the provider
+                        // Here we just allow sign in, but it's good to keep track
+                    }
+                    
+                    user.id = existUser._id.toString();
+                    user.role = existUser.role;
+                    return true;
+                } catch (error) {
+                    console.error("Error during OAuth sign in:", error);
+                    return false;
                 }
-                user.id = existUser._id as string
-
             }
-            return true
+            return true;
         },
 
-        async jwt({ token, user }) {
+        async jwt({ token, user, trigger, session }) {
             if (user) {
-                token.id = user.id
-                token.name = user.name
-                token.email = user.email
-                token.image = user.image
+                token.id = user.id;
+                token.name = user.name;
+                token.email = user.email;
+                token.image = user.image;
+                token.role = (user as any).role || 'user';
             }
-            return token
+            if (trigger === "update" && session) {
+                token = { ...token, ...session };
+            }
+            return token;
         },
-        // session ke ander user details daalega
 
-        session({ session, token }) {
+        async session({ session, token }) {
             if (session.user) {
-
-                session.user.name = token.name
-                session.user.email = token.email
-                session.user.image = token.image as string
+                session.user.id = token.id as string;
+                session.user.name = token.name;
+                session.user.email = token.email;
+                session.user.image = token.image as string;
+                session.user.role = token.role as string;
             }
-            return session
+            return session;
         }
-
-
-
     },
     session: {
         strategy: 'jwt',
-        maxAge: 30 * 24 * 60 * 60 * 1000
+        maxAge: 30 * 24 * 60 * 60, // 30 days
     },
     pages: {
         signIn: '/login',
-        error: '/login'
-
+        error: '/login',
+        newUser: '/register'
     },
-    secret: process.env.NEXT_AUTH_SECRET
-}
-export default authOptions
+    secret: process.env.NEXTAUTH_SECRET || process.env.NEXT_AUTH_SECRET
+};
 
-
-// sign in
-
-// token generate
-
-// token ke ander user details daal di
-
-// session ke ander user ki details daalni hai token se
+export default authOptions;

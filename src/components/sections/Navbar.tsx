@@ -1,4 +1,5 @@
 import React from "react"
+import Link from "next/link"
 import { Button } from "@/src/components/ui/button"
 import { BotMessageSquare, ChevronDown } from "lucide-react"
 import { motion } from "framer-motion"
@@ -10,10 +11,10 @@ export function Navbar() {
       className="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-md border-b border-border/50">
       <div className="max-w-[1450px] h-18 flex items-center justify-between">
         <div className="flex items-center pl-10 gap-2">
-          <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
+          <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center ">
             <BotMessageSquare className="w-5 h-5 text-white" />
           </div>
-          <span className="font-bold text-xl tracking-tight">ChatEmbed</span>
+          <span className="font-bold text-xl tracking-tight">SupportPilot</span>
         </div>
 
         <div className="hidden md:flex items-center gap-8 text-[0.9rem] font-medium text-muted-foreground">
@@ -26,8 +27,10 @@ export function Navbar() {
         </div>
 
         <div className="flex items-center pr-25 gap-4">
-          <a href="#" className="text-sm font-medium hover:text-primary hidden md:block">Log in</a>
-          <Button className="rounded-full bg-primary hover:bg-primary/90">Start Free &rarr;</Button>
+          <Link href="/login" className="text-sm font-medium hover:text-primary hidden md:block">Log in</Link>
+          <Link href="/register">
+            <Button className="rounded-full bg-primary hover:bg-primary/90">Start Free &rarr;</Button>
+          </Link>
         </div>
       </div>
     </nav>

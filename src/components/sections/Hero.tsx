@@ -1,6 +1,7 @@
 "use client"
 
 import React from "react"
+import Link from "next/link"
 import { Button } from "@/src/components/ui/button"
 import { Clock, Code, Play, BotMessageSquare, CheckCircle2, ChevronDown, MessageSquare, Users, BarChart3, Star, MoreHorizontal } from "lucide-react"
 import { motion } from "framer-motion"
@@ -59,9 +60,11 @@ export function Hero() {
             transition={{ delay: 0.4 }}
             className="flex flex-wrap items-center gap-4 mb-4"
           >
-            <Button size="lg" className=" px-6 md:px-8 bg-primary hover:bg-primary/90 text-white h-12 md:h-14 text-sm md:text-base">
-              Start Free Now &rarr;
-            </Button>
+            <Link href="/register">
+              <Button size="lg" className=" px-6 md:px-8 bg-primary hover:bg-primary/90 text-white h-12 md:h-14 text-sm md:text-base">
+                Start Free Now &rarr;
+              </Button>
+            </Link>
             <Button size="lg" variant="outline" className=" px-6 md:px-8 h-12 md:h-14 text-sm md:text-base border-border/50 hover:bg-secondary">
               <Play className="w-4 h-4 mr-2" /> Book a Demo
             </Button>
