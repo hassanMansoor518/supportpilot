@@ -3,6 +3,18 @@ import Settings from "@/model/setting.model";
 import { GoogleGenAI } from "@google/genai";
 import connectDb from "@/lib/db";
 
+const corsHeaders = {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type, Authorization",
+};
+
+export async function OPTIONS() {
+    return new Response(null, {
+        status: 204,
+        headers: corsHeaders,
+    });
+}
 
 export async function POST(req: NextRequest) {
     try {
@@ -21,6 +33,7 @@ export async function POST(req: NextRequest) {
                 },
                 {
                     status: 400,
+                    headers: corsHeaders,
                 }
             );
         }
@@ -36,6 +49,7 @@ export async function POST(req: NextRequest) {
                 },
                 {
                     status: 404,
+                    headers: corsHeaders,
                 }
             );
         }
@@ -91,7 +105,7 @@ ANSWER
         });
 
         const result = await ai.models.generateContent({
-            model: "gemini-3.5-flash",
+            model: "gemini-3-flash-preview",
             contents: prompt,
         });
 
@@ -102,6 +116,7 @@ ANSWER
             },
             {
                 status: 200,
+                headers: corsHeaders,
             }
         );
     } catch (error) {
@@ -114,6 +129,7 @@ ANSWER
             },
             {
                 status: 500,
+                headers: corsHeaders,
             }
         );
     }
