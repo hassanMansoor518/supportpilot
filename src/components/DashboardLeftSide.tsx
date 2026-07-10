@@ -52,9 +52,9 @@ export default function DashboardLeftSide() {
 
             {/* Sub-items */}
             <div className="ml-6 mt-1 flex flex-col relative before:absolute before:left-2.5 before:top-0 before:bottom-2 before:w-[1px] before:bg-gray-200">
-              <button className="w-full text-left pl-7 py-2 text-sm font-medium text-indigo-600 bg-indigo-50 rounded-lg mb-1 relative z-10">
+              <Link href="/dashboard/ChatbotSettings" className="w-full text-left pl-7 py-2 text-sm font-medium text-indigo-600 bg-indigo-50 rounded-lg mb-1 relative z-10 block">
                 Chatbot Settings
-              </button>
+              </Link>
               <button className="w-full text-left pl-7 py-2 text-sm font-medium text-gray-600 hover:text-gray-900">
                 Training Data
               </button>
@@ -64,12 +64,10 @@ export default function DashboardLeftSide() {
             </div>
           </div>
 
-          <button className="w-full flex items-center gap-3 px-3 py-2 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors mt-1">
+          <Link href="/dashboard/Integrations" className="w-full flex items-center gap-3 px-3 py-2 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors mt-1">
             <Puzzle size={18} className="text-gray-400" />
-            <Link href="/dashboard/Integrations" >
-              <span className="text-sm font-medium">Integrations</span>
-            </Link>
-          </button>
+            <span className="text-sm font-medium">Integrations</span>
+          </Link>
 
           <button className="w-full flex items-center gap-3 px-3 py-2 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors">
             <Calendar size={18} className="text-gray-400" />

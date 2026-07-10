@@ -1,16 +1,15 @@
 "use client";
 
-import DashboardClient from "@/src/components/DashboardClient";
-import { useSession } from "next-auth/react";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
-export default function page() {
-  const { data: session } = useSession();
+export default function DashboardPage() {
+  const router = useRouter();
 
-  if (!session) return <div>Not authenticated</div>;
+  useEffect(() => {
+    // Redirect to ChatbotSettings by default
+    router.replace("/dashboard/ChatbotSettings");
+  }, [router]);
 
-  return (
-    <div>
-      <DashboardClient ownerId={session.user.id} />
-    </div>
-  );
+  return null;
 }
