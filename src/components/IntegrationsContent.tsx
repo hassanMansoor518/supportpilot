@@ -29,7 +29,7 @@ export default function IntegrationsContent({ ownerId }: { ownerId: string }) {
   };
 
   return (
-    <div className="max-w-5xl mx-auto pb-10">
+    <div className="max-w-[1110px] mx-auto pb-10 mt-5">
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">Embed ChatBot</h1>
@@ -97,9 +97,9 @@ export default function IntegrationsContent({ ownerId }: { ownerId: string }) {
               <div className="text-[12px] text-gray-500">Click the copy button above</div>
             </div>
           </div>
-          
+
           <ChevronRight size={20} className="text-gray-300 shrink-0" />
-          
+
           <div className="flex items-center gap-4 flex-1 p-2">
             <div className="w-10 h-10 rounded-full bg-indigo-600 flex items-center justify-center text-white shrink-0">
               <Code size={20} />
@@ -156,13 +156,13 @@ export default function IntegrationsContent({ ownerId }: { ownerId: string }) {
             {/* Browser Content */}
             <div className="bg-white p-8 h-[400px] relative">
               <h3 className="text-2xl font-bold text-gray-800 mb-6">Your website goes here</h3>
-              
+
               {/* Skeleton content */}
               <div className="space-y-4 max-w-lg">
                 <div className="h-4 bg-gray-100 rounded-full w-full"></div>
                 <div className="h-4 bg-gray-100 rounded-full w-5/6"></div>
                 <div className="h-4 bg-gray-100 rounded-full w-4/6"></div>
-                
+
                 <div className="h-10 bg-gray-100 rounded-lg w-32 mt-8"></div>
               </div>
 
@@ -189,7 +189,7 @@ export default function IntegrationsContent({ ownerId }: { ownerId: string }) {
                     </div>
                   </div>
                 </div>
-                
+
                 {/* Floating Action Button */}
                 <div className="w-14 h-14 bg-[#1a1f2e] rounded-full flex items-center justify-center text-white shadow-lg cursor-pointer">
                   <MessageSquare size={24} />

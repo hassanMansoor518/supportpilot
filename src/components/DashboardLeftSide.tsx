@@ -9,6 +9,7 @@ import {
   Settings,
   Crown,
   ArrowRight,
+  CircleHelp,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -27,7 +28,7 @@ export default function DashboardLeftSide() {
 
 
       {/* Navigation */}
-      <div className="flex-1 px-3 overflow-y-auto">
+      <div className="flex-1 px-5 overflow-y-auto">
         <div className="mb-4">
           <button className="w-full flex items-center gap-3 px-3 pt-8 pb-5 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors">
             <Home size={18} className="text-gray-500" />
@@ -58,16 +59,24 @@ export default function DashboardLeftSide() {
               <button className="w-full text-left pl-7 py-2 text-sm font-medium text-gray-600 hover:text-gray-900">
                 Training Data
               </button>
-              <button className="w-full text-left pl-7 py-2 text-sm font-medium text-gray-600 hover:text-gray-900">
-                Test Your Bot
-              </button>
+              <Link
+                href="/dashboard/playground"
+                className="w-full text-left pl-7 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg flex items-center justify-between"
+              >
+                <span>Test Playground</span>
+
+                <span className="text-[10px] px-1.5 py-0.5 rounded bg-indigo-100 text-indigo-600 font-semibold">
+                  NEW
+                </span>
+              </Link>
+              <Link href="/dashboard/Integrations"
+                className="w-full text-left pl-7 py-2 text-sm font-medium text-gray-600 hover:text-gray-900">
+                Integrate Your Bot
+              </Link>
             </div>
           </div>
 
-          <Link href="/dashboard/Integrations" className="w-full flex items-center gap-3 px-3 py-2 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors mt-1">
-            <Puzzle size={18} className="text-gray-400" />
-            <span className="text-sm font-medium">Integrations</span>
-          </Link>
+
 
           <button className="w-full flex items-center gap-3 px-3 py-2 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors">
             <Calendar size={18} className="text-gray-400" />
@@ -79,8 +88,15 @@ export default function DashboardLeftSide() {
               <Settings size={18} className="text-gray-500" />
               <span className="text-sm font-medium">Settings</span>
             </div>
-            <ChevronDown size={16} className="text-gray-400" />
+
           </button>
+          <Link
+            href="/dashboard/help"
+            className="w-full flex items-center gap-3 px-3 py-2 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors"
+          >
+            <CircleHelp size={18} className="text-gray-400" />
+            <span className="text-sm font-medium">Help Center</span>
+          </Link>
         </div>
       </div>
 
