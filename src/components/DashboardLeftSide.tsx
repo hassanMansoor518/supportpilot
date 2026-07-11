@@ -60,7 +60,7 @@ export default function DashboardLeftSide() {
                 Training Data
               </button>
               <Link
-                href="/dashboard/playground"
+                href="/dashboard/TestPlayground"
                 className="w-full text-left pl-7 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg flex items-center justify-between"
               >
                 <span>Test Playground</span>

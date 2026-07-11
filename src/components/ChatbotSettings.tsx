@@ -13,9 +13,9 @@ import {
 import toast from "react-hot-toast";
 
 export default function ChatbotSettings({ ownerId }: { ownerId: string }) {
-  const [businessName, setBusinessName] = useState("Gada Electronics");
-  const [supportEmail, setSupportEmail] = useState("support@gadaelectronics.com");
-  const [knowledge, setKnowledge] = useState(`You can:\n\nVisit the store directly\n\nAsk the chatbot for help\n\nGet store contact details from the chatbot\n\n🤖 Chatbot Behavior Guidelines (Important)\n\nThe chatbot should:`);
+  const [businessName, setBusinessName] = useState("");
+  const [supportEmail, setSupportEmail] = useState("");
+  const [knowledge, setKnowledge] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
 
