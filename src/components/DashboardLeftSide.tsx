@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import {
   Bot,
@@ -12,8 +14,15 @@ import {
   CircleHelp,
 } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function DashboardLeftSide() {
+  const pathname = usePathname();
+
+  const isLinkActive = (path: string) => {
+    return pathname === path;
+  };
+
   return (
     <div className="w-[280px] h-screen bg-white border-r border-gray-100 flex flex-col font-sans">
       {/* Header / Logo */}
@@ -24,16 +33,13 @@ export default function DashboardLeftSide() {
         <h1 className="text-[20px] font-bold text-gray-900 tracking-tight">SupportPilot</h1>
       </div>
 
-
-
-
       {/* Navigation */}
       <div className="flex-1 px-5 overflow-y-auto">
         <div className="mb-4">
-          <button className="w-full flex items-center gap-3 px-3 pt-8 pb-5 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors">
+          <Link href="/dashboard" className="w-full flex items-center gap-3 px-3 pt-8 pb-5 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors">
             <Home size={18} className="text-gray-500" />
             <span className="text-sm font-medium">Overview</span>
-          </button>
+          </Link>
         </div>
 
         <div className="mb-2 mt-4 px-3 text-[11px] font-semibold text-gray-500 tracking-wider">
@@ -53,15 +59,26 @@ export default function DashboardLeftSide() {
 
             {/* Sub-items */}
             <div className="ml-6 mt-1 flex flex-col relative before:absolute before:left-2.5 before:top-0 before:bottom-2 before:w-[1px] before:bg-gray-200">
-              <Link href="/dashboard/ChatbotSettings" className="w-full text-left pl-7 py-2 text-sm font-medium text-indigo-600 bg-indigo-50 rounded-lg mb-1 relative z-10 block">
+              <Link 
+                href="/dashboard/ChatbotSettings" 
+                className={`w-full text-left pl-7 py-2 text-sm font-medium rounded-lg mb-1 relative z-10 block transition-colors ${
+                  isLinkActive("/dashboard/ChatbotSettings") 
+                    ? "text-indigo-600 bg-indigo-50" 
+                    : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                }`}
+              >
                 Chatbot Settings
               </Link>
-              <button className="w-full text-left pl-7 py-2 text-sm font-medium text-gray-600 hover:text-gray-900">
+              <button className="w-full text-left pl-7 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">
                 Training Data
               </button>
               <Link
                 href="/dashboard/TestPlayground"
-                className="w-full text-left pl-7 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg flex items-center justify-between"
+                className={`w-full text-left pl-7 py-2 text-sm font-medium rounded-lg flex items-center justify-between transition-colors ${
+                  isLinkActive("/dashboard/TestPlayground")
+                    ? "text-indigo-600 bg-indigo-50"
+                    : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                }`}
               >
                 <span>Test Playground</span>
 
@@ -69,8 +86,14 @@ export default function DashboardLeftSide() {
                   NEW
                 </span>
               </Link>
-              <Link href="/dashboard/Integrations"
-                className="w-full text-left pl-7 py-2 text-sm font-medium text-gray-600 hover:text-gray-900">
+              <Link 
+                href="/dashboard/Integrations"
+                className={`w-full text-left pl-7 py-2 text-sm font-medium rounded-lg transition-colors ${
+                  isLinkActive("/dashboard/Integrations")
+                    ? "text-indigo-600 bg-indigo-50"
+                    : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                }`}
+              >
                 Integrate Your Bot
               </Link>
             </div>
