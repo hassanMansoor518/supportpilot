@@ -10,6 +10,10 @@ const corsHeaders = {
     "Access-Control-Allow-Headers": "Content-Type, Authorization",
 };
 
+function escapeRegExp(value: string) {
+    return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
 export async function OPTIONS() {
     return new Response(null, {
         status: 204,
@@ -24,9 +28,10 @@ export async function POST(req: NextRequest) {
 
         // Get Request Body
         const { message, ownerId, saveHistory } = await req.json();
+        const normalizedOwnerId = String(ownerId || "").trim();
 
         // Validation
-        if (!message || !ownerId) {
+        if (!message || !normalizedOwnerId) {
             return NextResponse.json(
                 { success: false, message: "Message and ownerId are required." },
                 { status: 400, headers: corsHeaders }
@@ -34,7 +39,15 @@ export async function POST(req: NextRequest) {
         }
 
         // Find Business Settings
-        const setting = await Settings.findOne({ ownerId });
+        let setting = await Settings.findOne({ ownerId: normalizedOwnerId });
+
+        if (!setting) {
+            setting = await Settings.findOne({
+                ownerId: {
+                    $regex: new RegExp(`^${escapeRegExp(normalizedOwnerId)}$`, "i"),
+                },
+            });
+        }
 
         const businessName = setting?.businessName?.trim() || "SupportPilot";
         const supportEmail = setting?.supportEmail?.trim() || "support@supportpilot.com";
@@ -96,15 +109,24 @@ ${message}
 ANSWER:`;
         }
 
-        // Call Gemini AI
-        const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY! });
+        const normalizedMessage = message.trim().toLowerCase();
+        const isSimpleGreeting = /^(hi|hello|hey|hey there|greetings|good morning|good afternoon|good evening)$/i.test(normalizedMessage);
 
-        const result = await ai.models.generateContent({
-            model: "gemini-3.1-flash-lite",
-            contents: prompt,
-        });
+        let botResponse = "";
 
-        const botResponse = result.text ?? "Sorry, I could not get a response. Please try again.";
+        if (isSimpleGreeting) {
+            botResponse = `Hello! Welcome to ${businessName}. How can I assist you today?`;
+        } else {
+            // Call Gemini AI
+            const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY! });
+
+            const result = await ai.models.generateContent({
+                model: "gemini-3.1-flash-lite",
+                contents: prompt,
+            });
+
+            botResponse = result.text ?? "Sorry, I could not get a response. Please try again.";
+        }
 
         // Optionally save this exchange to chat history (used by Test Playground)
         if (saveHistory) {

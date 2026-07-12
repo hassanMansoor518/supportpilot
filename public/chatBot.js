@@ -7,7 +7,7 @@
 
   const config = {
     ownerId: currentScript.getAttribute('data-owner-id') || 'default',
-    primaryColor: currentScript.getAttribute('data-primary-color') || '#0f172a',
+    primaryColor: currentScript.getAttribute('data-primary-color') || '#0f3387',
     position: currentScript.getAttribute('data-position') || 'right',
     title: currentScript.getAttribute('data-title') || 'SupportPilot',
     subtitle: currentScript.getAttribute('data-subtitle') || 'Typically replies instantly',
@@ -398,9 +398,9 @@
       background: #f8fafc;
       border: 1px solid #cbd5e1;
       color: #334155;
-      padding: 8px 16px;
+      padding: 8px 10px;
       border-radius: 20px;
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 500;
       cursor: pointer;
       transition: all 0.2s;
@@ -709,9 +709,9 @@
         <h3>Hello 👋</h3>
         <p>Welcome to our support. How can we help today?</p>
         <div class="chatbot-suggestions">
-          <button class="chatbot-suggestion-btn">Pricing</button>
-          <button class="chatbot-suggestion-btn">Products</button>
-          <button class="chatbot-suggestion-btn">Contact Support</button>
+          <button class="chatbot-suggestion-btn">💲 Pricing</button>
+          <button class="chatbot-suggestion-btn">🛍️ Products</button>
+          <button class="chatbot-suggestion-btn">👤 Contact Support</button>
         </div>
       </div>
     `;
@@ -778,6 +778,14 @@
         input.value = e.target.textContent;
         sendMessage();
       });
+    });
+
+    const messagesContainer = document.getElementById('chatbot-messages');
+    messagesContainer.addEventListener('click', (event) => {
+      const button = event.target.closest('.chatbot-suggestion-btn');
+      if (!button) return;
+      input.value = button.textContent || '';
+      sendMessage();
     });
 
     // Close on escape
@@ -873,10 +881,21 @@
       `;
     }
 
+    const quickReplies = msg.role === 'bot' ? `
+      <div class="chatbot-suggestions chatbot-response-suggestions">
+        <button class="chatbot-suggestion-btn">🍔 Menu</button>
+        <button class="chatbot-suggestion-btn">💲 Prices</button>
+        <button class="chatbot-suggestion-btn">📍 Location</button>
+        <button class="chatbot-suggestion-btn">🕒 Opening</button>
+        <button class="chatbot-suggestion-btn">👤 Contact Support</button>
+      </div>
+    ` : '';
+
     div.innerHTML = `
       ${avatarHtml}
       <div style="flex:1; min-width:0;">
         <div class="chatbot-message-bubble">${renderMarkdown(msg.content)}</div>
+        ${quickReplies}
         <div class="chatbot-message-time">${time}</div>
       </div>
     `;
