@@ -355,7 +355,7 @@ export default function TestPlaygroundClient({ ownerId }: { ownerId?: string }) 
         </div>
 
         {/* ── RIGHT: Settings Panel ── */}
-        <div className="w-[300px] flex flex-col gap-3 flex-shrink-0 overflow-y-auto pr-1 h-full pb-4">
+        <div className="w-[320px] flex flex-col gap-3 flex-shrink-0 overflow-y-auto pr-1 h-full pb-4">
 
           {/* ── Bot Status Card ── */}
           <div className="rounded-2xl border border-indigo-100 shadow-sm flex-shrink-0"
