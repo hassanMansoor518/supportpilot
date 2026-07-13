@@ -12,16 +12,31 @@ import {
   Crown,
   ArrowRight,
   CircleHelp,
+  LayoutDashboard,
+  CreditCard,
+  FileText,
+  BarChart3,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 export default function DashboardLeftSide() {
   const pathname = usePathname();
+  const [isBillingOpen, setIsBillingOpen] = React.useState(pathname.includes("/dashboard/billing"));
 
   const isLinkActive = (path: string) => {
     return pathname === path;
   };
+
+  const isBillingActive = pathname.includes("/dashboard/billing");
+
+  // Keep billing expanded if user navigates to a billing page
+  React.useEffect(() => {
+    if (pathname.includes("/dashboard/billing")) {
+      setIsBillingOpen(true);
+    }
+  }, [pathname]);
+
 
   return (
     <div className="w-[280px] h-screen bg-white border-r border-gray-100 flex flex-col font-sans">
@@ -68,9 +83,7 @@ export default function DashboardLeftSide() {
               >
                 Chatbot Settings
               </Link>
-              <button className="w-full text-left pl-7 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">
-                Training Data
-              </button>
+          
               <Link
                 href="/dashboard/TestPlayground"
                 className={`w-full text-left pl-7 py-2 text-sm font-medium rounded-lg flex items-center justify-between transition-colors ${isLinkActive("/dashboard/TestPlayground")
@@ -98,10 +111,78 @@ export default function DashboardLeftSide() {
 
 
 
-          <button className="w-full flex items-center gap-3 px-3 py-2 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors">
-            <Calendar size={18} className="text-gray-400" />
-            <span className="text-sm font-medium">Billing</span>
-          </button>
+          {/* Billing Collapsible */}
+          <div className="flex flex-col">
+            <button
+              onClick={() => setIsBillingOpen(!isBillingOpen)}
+              className={`w-full flex items-center justify-between px-3 py-2 rounded-lg transition-colors cursor-pointer ${
+                isBillingActive
+                  ? "text-indigo-600 bg-indigo-50/30 font-semibold"
+                  : "text-gray-650 hover:text-gray-900 hover:bg-gray-50/85"
+              }`}
+            >
+              <div className="flex items-center gap-3">
+                <Calendar size={18} className={isBillingActive ? "text-indigo-650" : "text-gray-455"} />
+                <span className="text-sm font-semibold">Billing</span>
+              </div>
+              {isBillingOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+            </button>
+
+            {isBillingOpen && (
+              <div className="ml-6 mt-1 flex flex-col relative before:absolute before:left-2.5 before:top-0 before:bottom-2 before:w-[1px] before:bg-gray-200">
+                <Link
+                  href="/dashboard/billing/overview"
+                  className={`w-full text-left pl-7 py-2 text-sm font-medium rounded-lg mb-1 relative z-10 block transition-colors ${
+                    isLinkActive("/dashboard/billing/overview") || isLinkActive("/dashboard/billing")
+                      ? "text-indigo-600 bg-indigo-50"
+                      : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                  }`}
+                >
+                  Overview
+                </Link>
+                <Link
+                  href="/dashboard/billing/subscription"
+                  className={`w-full text-left pl-7 py-2 text-sm font-medium rounded-lg mb-1 relative z-10 block transition-colors ${
+                    isLinkActive("/dashboard/billing/subscription")
+                      ? "text-indigo-600 bg-indigo-50"
+                      : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                  }`}
+                >
+                  Subscription
+                </Link>
+                <Link
+                  href="/dashboard/billing/payment-methods"
+                  className={`w-full text-left pl-7 py-2 text-sm font-medium rounded-lg mb-1 relative z-10 block transition-colors ${
+                    isLinkActive("/dashboard/billing/payment-methods")
+                      ? "text-indigo-600 bg-indigo-50"
+                      : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                  }`}
+                >
+                  Payment Methods
+                </Link>
+                <Link
+                  href="/dashboard/billing/invoices"
+                  className={`w-full text-left pl-7 py-2 text-sm font-medium rounded-lg mb-1 relative z-10 block transition-colors ${
+                    isLinkActive("/dashboard/billing/invoices")
+                      ? "text-indigo-600 bg-indigo-50"
+                      : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                  }`}
+                >
+                  Invoices
+                </Link>
+                <Link
+                  href="/dashboard/billing/usage"
+                  className={`w-full text-left pl-7 py-2 text-sm font-medium rounded-lg relative z-10 block transition-colors ${
+                    isLinkActive("/dashboard/billing/usage")
+                      ? "text-indigo-600 bg-indigo-50"
+                      : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                  }`}
+                >
+                  Usage
+                </Link>
+              </div>
+            )}
+          </div>
 
           <button className="w-full flex items-center justify-between px-3 py-2 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors">
             <div className="flex items-center gap-3">

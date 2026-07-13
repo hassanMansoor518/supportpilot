@@ -1,5 +1,4 @@
-import { NextResponse } from "next-auth/next"; // wait, NextResponse is from next/server
-import { NextRequest, NextResponse as Res } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import connectDb from "@/lib/db";
 import User from "@/model/user.model";
@@ -9,7 +8,7 @@ export async function POST(req: NextRequest) {
         const { name, email, password } = await req.json();
 
         if (!name || !email || !password) {
-            return Res.json({ message: "Missing required fields" }, { status: 400 });
+            return NextResponse.json({ message: "Missing required fields" }, { status: 400 });
         }
 
         await connectDb();
@@ -17,7 +16,7 @@ export async function POST(req: NextRequest) {
         const existingUser = await User.findOne({ email });
 
         if (existingUser) {
-            return Res.json({ message: "User already exists with this email" }, { status: 400 });
+            return NextResponse.json({ message: "User already exists with this email" }, { status: 400 });
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -29,9 +28,9 @@ export async function POST(req: NextRequest) {
             provider: "credentials"
         });
 
-        return Res.json({ message: "User registered successfully", user: { id: newUser._id, email: newUser.email } }, { status: 201 });
+        return NextResponse.json({ message: "User registered successfully", user: { id: newUser._id, email: newUser.email } }, { status: 201 });
 
     } catch (error: any) {
-        return Res.json({ message: "An error occurred during registration", error: error.message }, { status: 500 });
+        return NextResponse.json({ message: "An error occurred during registration", error: error.message }, { status: 500 });
     }
 }
