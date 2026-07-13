@@ -59,13 +59,12 @@ export default function DashboardLeftSide() {
 
             {/* Sub-items */}
             <div className="ml-6 mt-1 flex flex-col relative before:absolute before:left-2.5 before:top-0 before:bottom-2 before:w-[1px] before:bg-gray-200">
-              <Link 
-                href="/dashboard/ChatbotSettings" 
-                className={`w-full text-left pl-7 py-2 text-sm font-medium rounded-lg mb-1 relative z-10 block transition-colors ${
-                  isLinkActive("/dashboard/ChatbotSettings") 
-                    ? "text-indigo-600 bg-indigo-50" 
+              <Link
+                href="/dashboard/ChatbotSettings"
+                className={`w-full text-left pl-7 py-2 text-sm font-medium rounded-lg mb-1 relative z-10 block transition-colors ${isLinkActive("/dashboard/ChatbotSettings")
+                    ? "text-indigo-600 bg-indigo-50"
                     : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
-                }`}
+                  }`}
               >
                 Chatbot Settings
               </Link>
@@ -74,11 +73,10 @@ export default function DashboardLeftSide() {
               </button>
               <Link
                 href="/dashboard/TestPlayground"
-                className={`w-full text-left pl-7 py-2 text-sm font-medium rounded-lg flex items-center justify-between transition-colors ${
-                  isLinkActive("/dashboard/TestPlayground")
+                className={`w-full text-left pl-7 py-2 text-sm font-medium rounded-lg flex items-center justify-between transition-colors ${isLinkActive("/dashboard/TestPlayground")
                     ? "text-indigo-600 bg-indigo-50"
                     : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
-                }`}
+                  }`}
               >
                 <span>Test Playground</span>
 
@@ -86,13 +84,12 @@ export default function DashboardLeftSide() {
                   NEW
                 </span>
               </Link>
-              <Link 
+              <Link
                 href="/dashboard/Integrations"
-                className={`w-full text-left pl-7 py-2 text-sm font-medium rounded-lg transition-colors ${
-                  isLinkActive("/dashboard/Integrations")
+                className={`w-full text-left pl-7 py-2 text-sm font-medium rounded-lg transition-colors ${isLinkActive("/dashboard/Integrations")
                     ? "text-indigo-600 bg-indigo-50"
                     : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
-                }`}
+                  }`}
               >
                 Integrate Your Bot
               </Link>
