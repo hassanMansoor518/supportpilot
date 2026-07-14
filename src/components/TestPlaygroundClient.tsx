@@ -211,9 +211,47 @@ export default function TestPlaygroundClient({ ownerId }: { ownerId?: string }) 
   const [isClearing, setIsClearing] = useState(false);
   const [useLatestModel, setUseLatestModel] = useState(true);
   const [showSources, setShowSources] = useState(true);
+  const [chatbots, setChatbots] = useState<any[]>([]);
+  const [selectedBot, setSelectedBot] = useState<any>(null);
+  const [isBotDropdownOpen, setIsBotDropdownOpen] = useState(false);
+  const [isLoadingBots, setIsLoadingBots] = useState(true);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const messageIdRef = useRef(0);
+
+  // ── Fetch chatbots ──────────────────────────────────────────────────────────
+  useEffect(() => {
+    async function fetchChatbots() {
+      try {
+        setIsLoadingBots(true);
+        const res = await fetch("/api/chatbots");
+        const data = await res.json();
+        if (data.success && data.data?.length > 0) {
+          setChatbots(data.data);
+          setSelectedBot(data.data[0]);
+        } else {
+          setChatbots([]);
+        }
+      } catch (err) {
+        console.error("Failed to fetch chatbots", err);
+      } finally {
+        setIsLoadingBots(false);
+      }
+    }
+    fetchChatbots();
+  }, []);
+
+  // ── Close bot dropdown on outside click ────────────────────────────────────
+  const botDropdownRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (botDropdownRef.current && !botDropdownRef.current.contains(e.target as Node)) {
+        setIsBotDropdownOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   // ── Load chat history from DB on mount ─────────────────────────────────────
   useEffect(() => {
@@ -283,7 +321,12 @@ export default function TestPlaygroundClient({ ownerId }: { ownerId?: string }) 
       const res = await fetch("/api/Chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: trimmed, ownerId: ownerId?.trim(), saveHistory: true }),
+        body: JSON.stringify({
+          message: trimmed,
+          chatbotKey: selectedBot?.chatbotKey,
+          ownerId: selectedBot ? undefined : ownerId?.trim(),
+          saveHistory: true,
+        }),
       });
       const data = await res.json();
       const botMsg: Message = {
@@ -362,7 +405,9 @@ export default function TestPlaygroundClient({ ownerId }: { ownerId?: string }) 
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                  <span className="text-sm font-semibold text-slate-900">SupportPilot Bot</span>
+                  <span className="text-sm font-semibold text-slate-900">
+                    {selectedBot ? selectedBot.chatbotName : "SupportPilot Bot"}
+                  </span>
                   <span className="rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-0.5 text-[11px] font-medium text-emerald-600">
                     Online
                   </span>
@@ -578,87 +623,95 @@ responses in real-time.
 
 {/* Bot Dropdown */}
 
+<div className="relative">
+  {/* Trigger */}
+  <button
+    onClick={() => setIsBotDropdownOpen((o) => !o)}
+    className="w-full group bg-white border border-gray-200 rounded-xl px-3.5 py-3 flex items-center justify-between hover:border-indigo-400 hover:shadow-sm transition cursor-pointer"
+  >
+    {isLoadingBots ? (
+      <div className="flex items-center gap-2 text-gray-400">
+        <Loader2 size={15} className="animate-spin" />
+        <span className="text-sm">Loading bots...</span>
+      </div>
+    ) : selectedBot ? (
+      <div className="flex items-center gap-3">
+        <div
+          className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
+          style={{ backgroundColor: selectedBot.themeColor + "22" }}
+        >
+          <Bot size={15} style={{ color: selectedBot.themeColor }} />
+        </div>
+        <div className="text-left">
+          <p className="text-sm font-medium text-gray-800">{selectedBot.chatbotName}</p>
+          <p className="text-[11px] text-gray-400">{selectedBot.aiModel}</p>
+        </div>
+      </div>
+    ) : (
+      <div className="flex items-center gap-2 text-gray-400">
+        <Bot size={15} />
+        <span className="text-sm">No chatbot available</span>
+      </div>
+    )}
+    <ChevronDown
+      size={15}
+      className={`text-gray-400 group-hover:text-indigo-500 transition-transform duration-200 ${isBotDropdownOpen ? "rotate-180 text-indigo-500" : ""}`}
+    />
+  </button>
 
-<div
-className="
-group
-bg-white
-border
-border-gray-200
-rounded-xl
-px-3.5
-py-3
-flex
-items-center
-justify-between
-hover:border-indigo-400
-hover:shadow-sm
-transition
-cursor-pointer
-"
->
+  {/* Dropdown List */}
+  {isBotDropdownOpen && chatbots.length > 0 && (
+    <div className="absolute z-20 mt-2 w-full rounded-xl border border-gray-200 bg-white shadow-lg overflow-hidden">
+      <div className="px-3 pt-2 pb-1">
+        <p className="text-[10px] font-semibold uppercase tracking-widest text-gray-400">Your Chatbots</p>
+      </div>
+      {chatbots.map((bot) => (
+        <button
+          key={bot._id}
+          onClick={() => {
+            setSelectedBot(bot);
+            setMessages([]);
+            setIsBotDropdownOpen(false);
+          }}
+          className={`w-full flex items-center gap-3 px-3.5 py-2.5 text-left text-sm transition hover:bg-indigo-50 ${
+            selectedBot?._id === bot._id
+              ? "bg-indigo-50 text-indigo-700 font-semibold"
+              : "text-gray-700"
+          }`}
+        >
+          <span
+            className="h-2.5 w-2.5 rounded-full flex-shrink-0"
+            style={{ backgroundColor: bot.themeColor }}
+          />
+          <span className="flex-1 truncate">{bot.chatbotName}</span>
+          {selectedBot?._id === bot._id && (
+            <span className="text-[10px] font-bold text-indigo-500">Active</span>
+          )}
+        </button>
+      ))}
+      <div className="border-t border-gray-100 px-3.5 py-2">
+        <a
+          href="/dashboard/ChatbotSettings"
+          className="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-600 hover:underline"
+        >
+          + Create New Chatbot
+        </a>
+      </div>
+    </div>
+  )}
 
-
-<div className="flex items-center gap-3">
-
-
-<div
-className="
-w-8
-h-8
-rounded-lg
-bg-indigo-50
-flex
-items-center
-justify-center
-"
->
-
-<Bot 
-size={15}
-className="text-indigo-600"
-/>
-
+  {isBotDropdownOpen && chatbots.length === 0 && !isLoadingBots && (
+    <div className="absolute z-20 mt-2 w-full rounded-xl border border-gray-200 bg-white shadow-lg p-4 text-center">
+      <p className="text-sm text-gray-500">No chatbots found.</p>
+      <a
+        href="/dashboard/ChatbotSettings"
+        className="mt-2 inline-block text-xs font-semibold text-indigo-600 hover:underline"
+      >
+        Create your first chatbot
+      </a>
+    </div>
+  )}
 </div>
-
-
-<div>
-
-<p className="
-text-sm
-font-medium
-text-gray-800
-">
-SupportPilot Bot
-</p>
-
-
-<p className="
-text-[11px]
-text-gray-400
-">
-Gemini Flash
-</p>
-
-
-</div>
-
-
-</div>
-
-
-
-<ChevronDown
-size={15}
-className="text-gray-400 group-hover:text-indigo-500"
-/>
-
-
-</div>
-
-
-
-
 
 {/* Settings */}
 

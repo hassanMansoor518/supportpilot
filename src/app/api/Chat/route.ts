@@ -3,6 +3,9 @@ import Settings from "@/model/setting.model";
 import ChatHistory from "@/model/chatHistory.model";
 import { GoogleGenAI } from "@google/genai";
 import connectDb from "@/lib/db";
+import { usageRepository } from "@/src/repositories/usage.repository";
+import Chatbot from "@/src/model/chatbot.model";
+import { subscriptionService } from "@/src/services/server/subscription.service";
 
 const corsHeaders = {
     "Access-Control-Allow-Origin": "*",
@@ -27,24 +30,63 @@ export async function POST(req: NextRequest) {
         await connectDb();
 
         // Get Request Body
-        const { message, ownerId, saveHistory } = await req.json();
-        const normalizedOwnerId = String(ownerId || "").trim();
+        const { message, ownerId, chatbotKey, saveHistory } = await req.json();
 
         // Validation
-        if (!message || !normalizedOwnerId) {
+        if (!message) {
             return NextResponse.json(
-                { success: false, message: "Message and ownerId are required." },
+                { success: false, message: "Message is required." },
                 { status: 400, headers: corsHeaders }
             );
         }
 
+        if (!ownerId && !chatbotKey) {
+            return NextResponse.json(
+                { success: false, message: "Either ownerId or chatbotKey must be provided." },
+                { status: 400, headers: corsHeaders }
+            );
+        }
+
+        let actualOwnerId = String(ownerId || "").trim();
+        let activeChatbot = null;
+
+        if (chatbotKey) {
+            activeChatbot = await Chatbot.findOne({ chatbotKey });
+            if (!activeChatbot) {
+                return NextResponse.json(
+                    { success: false, message: "Invalid chatbot key." },
+                    { status: 404, headers: corsHeaders }
+                );
+            }
+            if (activeChatbot.status !== "active") {
+                return NextResponse.json(
+                    { success: false, message: "Chatbot is inactive." },
+                    { status: 403, headers: corsHeaders }
+                );
+            }
+            actualOwnerId = activeChatbot.ownerId;
+        }
+
+        // Check Usage Limits
+        const usage = await usageRepository.findOrCreateByUserId(actualOwnerId);
+        const sub = await subscriptionService.getCurrentSubscription(actualOwnerId);
+        const plan = (sub as any).plan;
+        const msgLimit = plan?.messageLimit ?? 1000;
+
+        if (usage.messagesUsed >= msgLimit) {
+            return NextResponse.json(
+                { success: false, message: "Chatbot usage limit reached." },
+                { status: 402, headers: corsHeaders }
+            );
+        }
+
         // Find Business Settings
-        let setting = await Settings.findOne({ ownerId: normalizedOwnerId });
+        let setting = await Settings.findOne({ ownerId: actualOwnerId });
 
         if (!setting) {
             setting = await Settings.findOne({
                 ownerId: {
-                    $regex: new RegExp(`^${escapeRegExp(normalizedOwnerId)}$`, "i"),
+                    $regex: new RegExp(`^${escapeRegExp(actualOwnerId)}$`, "i"),
                 },
             });
         }
@@ -132,7 +174,7 @@ ANSWER:`;
         if (saveHistory) {
             const now = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
             await ChatHistory.findOneAndUpdate(
-                { ownerId },
+                { ownerId: actualOwnerId },
                 {
                     $push: {
                         messages: {
@@ -146,6 +188,13 @@ ANSWER:`;
                 },
                 { upsert: true }
             );
+        }
+
+        // Increment usage
+        if (actualOwnerId && botResponse) {
+            const botName = activeChatbot ? activeChatbot.chatbotName : businessName;
+            await usageRepository.incrementMessages(actualOwnerId, 1, botName);
+            await usageRepository.incrementApiRequests(actualOwnerId, 1);
         }
 
         return NextResponse.json(

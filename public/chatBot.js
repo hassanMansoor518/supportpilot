@@ -5,18 +5,20 @@
     return scripts[scripts.length - 1];
   })();
 
-  const config = {
-    ownerId: currentScript.getAttribute('data-owner-id') || 'default',
+  let config = {
+    chatbotKey: currentScript.getAttribute('data-chatbot-key') || '',
     primaryColor: currentScript.getAttribute('data-primary-color') || '#0f3387',
     position: currentScript.getAttribute('data-position') || 'right',
     title: currentScript.getAttribute('data-title') || 'SupportPilot',
     subtitle: currentScript.getAttribute('data-subtitle') || 'Typically replies instantly',
     avatar: currentScript.getAttribute('data-avatar') || 'default',
-    theme: currentScript.getAttribute('data-theme') || 'light'
+    theme: currentScript.getAttribute('data-theme') || 'light',
+    welcomeMessage: 'Welcome to our support. How can we help today?'
   };
 
   const API_URL = "http://localhost:3000/api/Chat";
-  const STORAGE_KEY = `chatbot_state_${config.ownerId}`;
+  const INIT_URL = "http://localhost:3000/api/chatbot/init";
+  const STORAGE_KEY = `chatbot_state_${config.chatbotKey || 'default'}`;
 
   // Default icons
   const ICONS = {
@@ -606,7 +608,27 @@
 
   // --- Core Functions ---
 
-  function init() {
+  async function init() {
+    if (config.chatbotKey) {
+      try {
+        const response = await fetch(INIT_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ chatbotKey: config.chatbotKey })
+        });
+        const data = await response.json();
+        if (data.success) {
+          config.title = data.data.title || config.title;
+          config.welcomeMessage = data.data.welcomeMessage || config.welcomeMessage;
+          config.primaryColor = data.data.themeColor || config.primaryColor;
+        } else {
+          console.error("Chatbot initialization failed:", data.message);
+        }
+      } catch (err) {
+        console.error("Chatbot initialization error:", err);
+      }
+    }
+
     loadConversation();
     injectStyles();
     createWidget();
@@ -707,7 +729,7 @@
     return `
       <div class="chatbot-welcome" id="chatbot-welcome">
         <h3>Hello 👋</h3>
-        <p>Welcome to our support. How can we help today?</p>
+        <p>${config.welcomeMessage}</p>
         <div class="chatbot-suggestions">
           <button class="chatbot-suggestion-btn">💲 Pricing</button>
           <button class="chatbot-suggestion-btn">🛍️ Products</button>
@@ -928,7 +950,7 @@
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          ownerId: config.ownerId,
+          chatbotKey: config.chatbotKey,
           message: text,
           conversationId: state.conversationId
         })

@@ -83,6 +83,15 @@ export default function DashboardLeftSide() {
               >
                 Chatbot Settings
               </Link>
+              <Link
+                href="/dashboard/chatbots"
+                className={`w-full text-left pl-7 py-2 text-sm font-medium rounded-lg mb-1 relative z-10 block transition-colors ${isLinkActive("/dashboard/chatbots")
+                    ? "text-indigo-600 bg-indigo-50"
+                    : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                  }`}
+              >
+                Chatbots
+              </Link>
           
               <Link
                 href="/dashboard/TestPlayground"
