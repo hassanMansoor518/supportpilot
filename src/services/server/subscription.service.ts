@@ -66,6 +66,13 @@ export class SubscriptionService {
       currentPeriodEnd: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
     });
 
+    await usageRepository.syncPlanLimits(userId, {
+      messages: plan.messageLimit,
+      storage: plan.storageLimit,
+      bots: plan.botLimit,
+      apiCalls: plan.apiLimit,
+    });
+
     return updatedSub!;
   }
 
@@ -125,30 +132,42 @@ export class SubscriptionService {
     }
 
     const currentSub = await this.getCurrentSubscription(userId);
-    if (!currentSub.stripeSubscriptionId) {
-      throw new Error("No active subscription to upgrade/downgrade. Please complete checkout first.");
-    }
 
     const priceId = `price_${planSlug}_${billingCycle}`;
 
-    // Update Stripe subscription items (using simple proration)
-    const stripeSub = await stripe.subscriptions.retrieve(currentSub.stripeSubscriptionId);
-    const subscriptionItemId = stripeSub.items.data[0].id;
+    if (currentSub.stripeSubscriptionId) {
+      try {
+        // Update Stripe subscription items (using simple proration)
+        const stripeSub = await stripe.subscriptions.retrieve(currentSub.stripeSubscriptionId);
+        const subscriptionItemId = stripeSub.items.data[0].id;
 
-    await stripe.subscriptions.update(currentSub.stripeSubscriptionId, {
-      proration_behavior: "create_prorations",
-      items: [
-        {
-          id: subscriptionItemId,
-          price: priceId,
-        },
-      ],
-    });
+        await stripe.subscriptions.update(currentSub.stripeSubscriptionId, {
+          proration_behavior: "create_prorations",
+          items: [
+            {
+              id: subscriptionItemId,
+              price: priceId,
+            },
+          ],
+        });
+      } catch (error) {
+        console.error("Stripe upgrade failed, continuing with local plan update:", error);
+      }
+    }
 
     const updated = await subscriptionRepository.update(currentSub._id.toString(), {
       plan: plan._id,
       stripePriceId: priceId,
       billingCycle,
+      status: "active",
+      cancelAtPeriodEnd: false,
+    });
+
+    await usageRepository.syncPlanLimits(userId, {
+      messages: plan.messageLimit,
+      storage: plan.storageLimit,
+      bots: plan.botLimit,
+      apiCalls: plan.apiLimit,
     });
 
     return updated!;

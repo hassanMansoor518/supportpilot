@@ -6,7 +6,7 @@ import connectDb from "../lib/db";
 
 export type AuthenticatedHandler = (
   req: NextRequest,
-  context: { params: any; user: { id: string; email: string; name: string; role: string } }
+  context: { params: Promise<any> | any; user: { id: string; email: string; name: string; role: string } }
 ) => Promise<NextResponse>;
 
 export function withAuth(handler: AuthenticatedHandler) {

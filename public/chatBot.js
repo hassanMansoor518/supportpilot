@@ -38,7 +38,8 @@
   };
 
   // --- Styles ---
-  const styles = `
+  function getStyles() {
+    return `
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 
     #chatbot-widget {
@@ -605,6 +606,7 @@
       }
     }
   `;
+  }
 
   // --- Core Functions ---
 
@@ -666,8 +668,14 @@
   }
 
   function injectStyles() {
+    const existingStyle = document.getElementById('chatbot-widget-styles');
+    if (existingStyle) {
+      existingStyle.remove();
+    }
+
     const styleEl = document.createElement('style');
-    styleEl.textContent = styles;
+    styleEl.id = 'chatbot-widget-styles';
+    styleEl.textContent = getStyles();
     document.head.appendChild(styleEl);
   }
 

@@ -19,9 +19,13 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useBilling } from "@/src/hooks/useBilling";
+import { useUsage } from "@/src/hooks/useUsage";
 
 export default function DashboardLeftSide() {
   const pathname = usePathname();
+  const { overview, isLoading: isBillingLoading } = useBilling();
+  const { usage, isLoading: isUsageLoading } = useUsage();
   const [isBillingOpen, setIsBillingOpen] = React.useState(pathname.includes("/dashboard/billing"));
 
   const isLinkActive = (path: string) => {
@@ -50,12 +54,6 @@ export default function DashboardLeftSide() {
 
       {/* Navigation */}
       <div className="flex-1 px-5 overflow-y-auto">
-        <div className="mb-4">
-          <Link href="/dashboard" className="w-full flex items-center gap-3 px-3 pt-8 pb-5 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors">
-            <Home size={18} className="text-gray-500" />
-            <span className="text-sm font-medium">Overview</span>
-          </Link>
-        </div>
 
         <div className="mb-2 mt-4 px-3 text-[11px] font-semibold text-gray-500 tracking-wider">
           MANAGE
@@ -77,8 +75,8 @@ export default function DashboardLeftSide() {
               <Link
                 href="/dashboard/ChatbotSettings"
                 className={`w-full text-left pl-7 py-2 text-sm font-medium rounded-lg mb-1 relative z-10 block transition-colors ${isLinkActive("/dashboard/ChatbotSettings")
-                    ? "text-indigo-600 bg-indigo-50"
-                    : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                  ? "text-indigo-600 bg-indigo-50"
+                  : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
                   }`}
               >
                 Chatbot Settings
@@ -86,18 +84,18 @@ export default function DashboardLeftSide() {
               <Link
                 href="/dashboard/chatbots"
                 className={`w-full text-left pl-7 py-2 text-sm font-medium rounded-lg mb-1 relative z-10 block transition-colors ${isLinkActive("/dashboard/chatbots")
-                    ? "text-indigo-600 bg-indigo-50"
-                    : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                  ? "text-indigo-600 bg-indigo-50"
+                  : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
                   }`}
               >
                 Chatbots
               </Link>
-          
+
               <Link
                 href="/dashboard/TestPlayground"
                 className={`w-full text-left pl-7 py-2 text-sm font-medium rounded-lg flex items-center justify-between transition-colors ${isLinkActive("/dashboard/TestPlayground")
-                    ? "text-indigo-600 bg-indigo-50"
-                    : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                  ? "text-indigo-600 bg-indigo-50"
+                  : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
                   }`}
               >
                 <span>Test Playground</span>
@@ -109,8 +107,8 @@ export default function DashboardLeftSide() {
               <Link
                 href="/dashboard/Integrations"
                 className={`w-full text-left pl-7 py-2 text-sm font-medium rounded-lg transition-colors ${isLinkActive("/dashboard/Integrations")
-                    ? "text-indigo-600 bg-indigo-50"
-                    : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                  ? "text-indigo-600 bg-indigo-50"
+                  : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
                   }`}
               >
                 Integrate Your Bot
@@ -124,11 +122,10 @@ export default function DashboardLeftSide() {
           <div className="flex flex-col">
             <button
               onClick={() => setIsBillingOpen(!isBillingOpen)}
-              className={`w-full flex items-center justify-between px-3 py-2 rounded-lg transition-colors cursor-pointer ${
-                isBillingActive
+              className={`w-full flex items-center justify-between px-3 py-2 rounded-lg transition-colors cursor-pointer ${isBillingActive
                   ? "text-indigo-600 bg-indigo-50/30 font-semibold"
                   : "text-gray-650 hover:text-gray-900 hover:bg-gray-50/85"
-              }`}
+                }`}
             >
               <div className="flex items-center gap-3">
                 <Calendar size={18} className={isBillingActive ? "text-indigo-650" : "text-gray-455"} />
@@ -141,51 +138,46 @@ export default function DashboardLeftSide() {
               <div className="ml-6 mt-1 flex flex-col relative before:absolute before:left-2.5 before:top-0 before:bottom-2 before:w-[1px] before:bg-gray-200">
                 <Link
                   href="/dashboard/billing/overview"
-                  className={`w-full text-left pl-7 py-2 text-sm font-medium rounded-lg mb-1 relative z-10 block transition-colors ${
-                    isLinkActive("/dashboard/billing/overview") || isLinkActive("/dashboard/billing")
+                  className={`w-full text-left pl-7 py-2 text-sm font-medium rounded-lg mb-1 relative z-10 block transition-colors ${isLinkActive("/dashboard/billing/overview") || isLinkActive("/dashboard/billing")
                       ? "text-indigo-600 bg-indigo-50"
                       : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
-                  }`}
+                    }`}
                 >
                   Overview
                 </Link>
                 <Link
                   href="/dashboard/billing/subscription"
-                  className={`w-full text-left pl-7 py-2 text-sm font-medium rounded-lg mb-1 relative z-10 block transition-colors ${
-                    isLinkActive("/dashboard/billing/subscription")
+                  className={`w-full text-left pl-7 py-2 text-sm font-medium rounded-lg mb-1 relative z-10 block transition-colors ${isLinkActive("/dashboard/billing/subscription")
                       ? "text-indigo-600 bg-indigo-50"
                       : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
-                  }`}
+                    }`}
                 >
                   Subscription
                 </Link>
                 <Link
                   href="/dashboard/billing/payment-methods"
-                  className={`w-full text-left pl-7 py-2 text-sm font-medium rounded-lg mb-1 relative z-10 block transition-colors ${
-                    isLinkActive("/dashboard/billing/payment-methods")
+                  className={`w-full text-left pl-7 py-2 text-sm font-medium rounded-lg mb-1 relative z-10 block transition-colors ${isLinkActive("/dashboard/billing/payment-methods")
                       ? "text-indigo-600 bg-indigo-50"
                       : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
-                  }`}
+                    }`}
                 >
                   Payment Methods
                 </Link>
                 <Link
                   href="/dashboard/billing/invoices"
-                  className={`w-full text-left pl-7 py-2 text-sm font-medium rounded-lg mb-1 relative z-10 block transition-colors ${
-                    isLinkActive("/dashboard/billing/invoices")
+                  className={`w-full text-left pl-7 py-2 text-sm font-medium rounded-lg mb-1 relative z-10 block transition-colors ${isLinkActive("/dashboard/billing/invoices")
                       ? "text-indigo-600 bg-indigo-50"
                       : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
-                  }`}
+                    }`}
                 >
                   Invoices
                 </Link>
                 <Link
                   href="/dashboard/billing/usage"
-                  className={`w-full text-left pl-7 py-2 text-sm font-medium rounded-lg relative z-10 block transition-colors ${
-                    isLinkActive("/dashboard/billing/usage")
+                  className={`w-full text-left pl-7 py-2 text-sm font-medium rounded-lg relative z-10 block transition-colors ${isLinkActive("/dashboard/billing/usage")
                       ? "text-indigo-600 bg-indigo-50"
                       : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
-                  }`}
+                    }`}
                 >
                   Usage
                 </Link>
@@ -215,26 +207,37 @@ export default function DashboardLeftSide() {
         <div className="bg-[#f5f3ff] rounded-2xl p-4">
           <div className="flex items-center gap-2 text-indigo-600 font-semibold text-[13px] mb-3">
             <Crown size={16} />
-            <span>Pro Plan</span>
+            <span>{isBillingLoading || isUsageLoading ? "Loading..." : (overview?.subscription?.planId || "starter").toString().replace(/^./, (c) => c.toUpperCase())} Plan</span>
           </div>
 
           <div className="text-[13px] font-medium text-gray-900 mb-3">
-            You're on Pro Plan
+            {isBillingLoading ? "Loading your plan..." : `You're on ${overview?.subscription?.planId || "starter"} plan`}
           </div>
 
           <div className="flex items-center gap-2 mb-2">
             <div className="flex-1 h-1.5 bg-gray-200 rounded-full">
-              <div className="h-full bg-indigo-600 rounded-full" style={{ width: "38.2%" }}></div>
+              <div
+                className="h-full bg-indigo-600 rounded-full"
+                style={{
+                  width: usage?.messages?.limit ? `${Math.min(100, (usage?.messages?.used / usage.messages.limit) * 100)}%` : "0%",
+                }}
+              />
             </div>
           </div>
 
           <div className="text-[11px] text-gray-500 mb-4 font-medium">
-            <span className="text-gray-900 font-semibold">3,820 / 10,000</span> messages
+            <span className="text-gray-900 font-semibold">
+              {usage?.messages?.used ?? 0} / {usage?.messages?.limit ?? 0}
+            </span>{" "}
+            messages
           </div>
 
-          <button className="w-full flex items-center justify-center gap-1.5 bg-indigo-600/5 hover:bg-indigo-600/10 text-indigo-700 font-semibold text-sm py-2 rounded-lg transition-colors">
+          <Link
+            href="/dashboard/billing/subscription"
+            className="w-full flex items-center justify-center gap-1.5 bg-indigo-600/5 hover:bg-indigo-600/10 text-indigo-700 font-semibold text-sm py-2 rounded-lg transition-colors"
+          >
             Upgrade Plan <ArrowRight size={14} />
-          </button>
+          </Link>
         </div>
       </div>
     </div>

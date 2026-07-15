@@ -6,7 +6,8 @@ import { usageRepository } from "@/src/repositories/usage.repository";
 
 export const GET = withAuth(async (req: NextRequest, { user, params }) => {
   try {
-    const { id } = params;
+    const resolvedParams = await params;
+    const { id } = resolvedParams;
     const chatbot = await Chatbot.findOne({ _id: id, ownerId: user.id });
 
     if (!chatbot) {
@@ -21,13 +22,14 @@ export const GET = withAuth(async (req: NextRequest, { user, params }) => {
 
 export const PUT = withAuth(async (req: NextRequest, { user, params }) => {
   try {
-    const { id } = params;
+    const resolvedParams = await params;
+    const { id } = resolvedParams;
     const body = await req.json();
     
     const updated = await Chatbot.findOneAndUpdate(
       { _id: id, ownerId: user.id },
       { $set: body },
-      { new: true }
+      { returnDocument: "after" }
     );
 
     if (!updated) {
@@ -42,7 +44,8 @@ export const PUT = withAuth(async (req: NextRequest, { user, params }) => {
 
 export const DELETE = withAuth(async (req: NextRequest, { user, params }) => {
   try {
-    const { id } = params;
+    const resolvedParams = await params;
+    const { id } = resolvedParams;
 
     const chatbot = await Chatbot.findOneAndDelete({ _id: id, ownerId: user.id });
 

@@ -17,9 +17,11 @@ import {
 import toast from "react-hot-toast";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function ChatbotSettings({ ownerId, botId }: { ownerId: string; botId?: string | null }) {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const isEditMode = !!botId;
 
   // Chatbot-specific fields
@@ -123,6 +125,10 @@ export default function ChatbotSettings({ ownerId, botId }: { ownerId: string; b
         });
         const data = await res.json();
         if (data.success) {
+          await Promise.all([
+            queryClient.invalidateQueries({ queryKey: ["usage"] }),
+            queryClient.invalidateQueries({ queryKey: ["billingOverview"] }),
+          ]);
           toast.success("Chatbot created successfully!");
           router.push("/dashboard/chatbots");
         } else {

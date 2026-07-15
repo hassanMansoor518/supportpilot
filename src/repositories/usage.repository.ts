@@ -34,7 +34,7 @@ export class UsageRepository {
     usage.messagesUsed += count;
     
     // Update daily stats
-    const dailyStat = usage.dailyStats.find(s => s.date === today);
+    const dailyStat = usage.dailyStats.find((s: { date: string; requests: number }) => s.date === today);
     if (dailyStat) {
       dailyStat.requests += count;
     } else {
@@ -47,7 +47,7 @@ export class UsageRepository {
     }
 
     // Update bot usage
-    const botStat = usage.botUsage.find(b => b.botName === botName);
+    const botStat = usage.botUsage.find((b: { botName: string; messages: number }) => b.botName === botName);
     if (botStat) {
       botStat.messages += count;
     } else {
@@ -65,7 +65,7 @@ export class UsageRepository {
 
     usage.apiRequests += count;
     
-    const dailyStat = usage.dailyStats.find(s => s.date === today);
+    const dailyStat = usage.dailyStats.find((s: { date: string; requests: number }) => s.date === today);
     if (dailyStat) {
       dailyStat.requests += count;
     } else {
@@ -93,6 +93,18 @@ export class UsageRepository {
       { storageUsed: count },
       { new: true }
     );
+  }
+
+  async syncPlanLimits(userId: string, limits: { messages: number; storage: number; bots: number; apiCalls: number }) {
+    const usage = await UsageModel.findOne({ user: userId });
+    if (!usage) return null;
+
+    usage.messagesUsed = Math.min(usage.messagesUsed, limits.messages);
+    usage.storageUsed = Math.min(usage.storageUsed, limits.storage);
+    usage.apiRequests = Math.min(usage.apiRequests, limits.apiCalls);
+    usage.botsCreated = Math.min(usage.botsCreated, limits.bots);
+
+    return usage.save();
   }
 
   async resetMonthlyUsage(userId: string): Promise<IUsage | null> {

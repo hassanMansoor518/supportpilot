@@ -1,9 +1,14 @@
-import { delay, getUsage } from "./mockDb";
 import { Usage } from "../types/Usage";
 
 export const usageService = {
   getUsage: async (): Promise<Usage> => {
-    await delay(400);
-    return getUsage();
+    const res = await fetch("/api/usage", { cache: "no-store" });
+    const data = await res.json();
+
+    if (!res.ok || !data?.success) {
+      throw new Error(data?.message || "Failed to fetch usage data");
+    }
+
+    return data.data as Usage;
   }
 };

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 import {
   Bot,
   BookOpen,
@@ -204,6 +205,7 @@ const SUGGESTED_REPLIES = [
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 export default function TestPlaygroundClient({ ownerId }: { ownerId?: string }) {
+  const queryClient = useQueryClient();
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
@@ -329,6 +331,12 @@ export default function TestPlaygroundClient({ ownerId }: { ownerId?: string }) 
         }),
       });
       const data = await res.json();
+      if (data?.success) {
+        await Promise.all([
+          queryClient.invalidateQueries({ queryKey: ["usage"] }),
+          queryClient.invalidateQueries({ queryKey: ["billingOverview"] }),
+        ]);
+      }
       const botMsg: Message = {
         id: createMessageId(),
         role: "bot",
