@@ -94,33 +94,9 @@ export default async function ArticlePage({
   const relatedArticles = categoryInfo.articles.filter(a => a.id !== articleId).slice(0, 3);
 
   return (
-    <main className="min-h-screen bg-white text-slate-900">
+    <main className="min-h-screen bg-white text-slate-900 -m-5">
 
-      {/* Top Navigation Bar for Docs */}
-      <div className="border-b border-slate-200 bg-white sticky top-0 z-10">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex h-16 items-center justify-between">
-            <nav className="flex items-center text-sm font-medium text-slate-500">
-              <Link href="/dashboard/help" className="hover:text-slate-900 transition-colors">
-                Help Center
-              </Link>
-              <ChevronRight className="mx-2 h-4 w-4 text-slate-400" />
-              <Link href={`/dashboard/help/${category}`} className="hover:text-slate-900 transition-colors">
-                {categoryInfo.title}
-              </Link>
-              <ChevronRight className="mx-2 h-4 w-4 text-slate-400" />
-              <span className="text-slate-900 truncate max-w-[200px] sm:max-w-xs">{article.title}</span>
-            </nav>
 
-            <div className="flex items-center">
-              <Link href="/dashboard/help" className="text-sm font-medium text-violet-600 hover:text-violet-700 flex items-center gap-1">
-                <ArrowLeft className="h-4 w-4" />
-                Back to Help
-              </Link>
-            </div>
-          </div>
-        </div>
-      </div>
 
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row gap-16">
