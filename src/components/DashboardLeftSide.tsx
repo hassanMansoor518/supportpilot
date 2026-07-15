@@ -59,10 +59,10 @@ export default function DashboardLeftSide() {
           MANAGE
         </div>
 
-        <div className="space-y-2">
+        <div className="space-y-5">
           {/* AI Chatbot (Expanded) */}
           <div className="flex flex-col">
-            <button className="w-full flex items-center justify-between px-3 py-2 text-indigo-600 hover:bg-indigo-50/50 rounded-lg transition-colors">
+            <button className="w-full flex items-center justify-between px-3 py-2 text-gray-500 hover:bg-indigo-50/50 rounded-lg transition-colors">
               <div className="flex items-center gap-3">
                 <Bot size={18} />
                 <span className="text-sm font-semibold">AI Chatbot</span>
@@ -123,13 +123,13 @@ export default function DashboardLeftSide() {
             <button
               onClick={() => setIsBillingOpen(!isBillingOpen)}
               className={`w-full flex items-center justify-between px-3 py-2 rounded-lg transition-colors cursor-pointer ${isBillingActive
-                  ? "text-indigo-600 bg-indigo-50/30 font-semibold"
-                  : "text-gray-650 hover:text-gray-900 hover:bg-gray-50/85"
+                ? "text-indigo-600 bg-indigo-50/30 font-semibold"
+                : "text-gray-650 hover:text-gray-900 hover:bg-gray-50/85"
                 }`}
             >
-              <div className="flex items-center gap-3">
-                <Calendar size={18} className={isBillingActive ? "text-indigo-650" : "text-gray-455"} />
-                <span className="text-sm font-semibold">Billing</span>
+              <div className="flex items-center gap-3  text-gray-500">
+                <Calendar size={18} className={isBillingActive ? "text-indigo-650" : "text-gray-500"} />
+                <span className="text-sm font-semibold ">Billing</span>
               </div>
               {isBillingOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
             </button>
@@ -139,8 +139,8 @@ export default function DashboardLeftSide() {
                 <Link
                   href="/dashboard/billing/overview"
                   className={`w-full text-left pl-7 py-2 text-sm font-medium rounded-lg mb-1 relative z-10 block transition-colors ${isLinkActive("/dashboard/billing/overview") || isLinkActive("/dashboard/billing")
-                      ? "text-indigo-600 bg-indigo-50"
-                      : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                    ? "text-indigo-600 bg-indigo-50"
+                    : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
                     }`}
                 >
                   Overview
@@ -148,8 +148,8 @@ export default function DashboardLeftSide() {
                 <Link
                   href="/dashboard/billing/subscription"
                   className={`w-full text-left pl-7 py-2 text-sm font-medium rounded-lg mb-1 relative z-10 block transition-colors ${isLinkActive("/dashboard/billing/subscription")
-                      ? "text-indigo-600 bg-indigo-50"
-                      : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                    ? "text-indigo-600 bg-indigo-50"
+                    : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
                     }`}
                 >
                   Subscription
@@ -157,8 +157,8 @@ export default function DashboardLeftSide() {
                 <Link
                   href="/dashboard/billing/payment-methods"
                   className={`w-full text-left pl-7 py-2 text-sm font-medium rounded-lg mb-1 relative z-10 block transition-colors ${isLinkActive("/dashboard/billing/payment-methods")
-                      ? "text-indigo-600 bg-indigo-50"
-                      : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                    ? "text-indigo-600 bg-indigo-50"
+                    : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
                     }`}
                 >
                   Payment Methods
@@ -166,8 +166,8 @@ export default function DashboardLeftSide() {
                 <Link
                   href="/dashboard/billing/invoices"
                   className={`w-full text-left pl-7 py-2 text-sm font-medium rounded-lg mb-1 relative z-10 block transition-colors ${isLinkActive("/dashboard/billing/invoices")
-                      ? "text-indigo-600 bg-indigo-50"
-                      : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                    ? "text-indigo-600 bg-indigo-50"
+                    : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
                     }`}
                 >
                   Invoices
@@ -175,8 +175,8 @@ export default function DashboardLeftSide() {
                 <Link
                   href="/dashboard/billing/usage"
                   className={`w-full text-left pl-7 py-2 text-sm font-medium rounded-lg relative z-10 block transition-colors ${isLinkActive("/dashboard/billing/usage")
-                      ? "text-indigo-600 bg-indigo-50"
-                      : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                    ? "text-indigo-600 bg-indigo-50"
+                    : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
                     }`}
                 >
                   Usage
@@ -184,14 +184,6 @@ export default function DashboardLeftSide() {
               </div>
             )}
           </div>
-
-          <button className="w-full flex items-center justify-between px-3 py-2 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors">
-            <div className="flex items-center gap-3">
-              <Settings size={18} className="text-gray-500" />
-              <span className="text-sm font-medium">Settings</span>
-            </div>
-
-          </button>
           <Link
             href="/dashboard/help"
             className="w-full flex items-center gap-3 px-3 py-2 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors"
