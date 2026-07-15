@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowLeft, Calendar, ChevronRight, Clock, Share2, ThumbsDown, ThumbsUp, User } from "lucide-react";
+import { ChevronRight, FileText, Info, ArrowLeft, ArrowUpRight } from "lucide-react";
 import { notFound } from "next/navigation";
 
 // Reusing the same mock data for article contents
@@ -12,28 +12,28 @@ const categoryData: Record<string, { title: string; articles: { id: string; titl
         title: "How to create your first chatbot", 
         excerpt: "A step-by-step guide to setting up your first SupportPilot chatbot.", 
         readTime: "5 min read",
-        content: "Creating your first chatbot is easy. First, navigate to the Chatbots section from the left sidebar. Click on the 'Create New Chatbot' button. You'll be prompted to provide a name and a base prompt. Once created, you can start feeding it data via website URLs or document uploads..."
+        content: "Creating your first chatbot is easy. First, navigate to the Chatbots section from the left sidebar. Click on the 'Create New Chatbot' button. You'll be prompted to provide a name and a base prompt. Once created, you can start feeding it data via website URLs or document uploads."
       },
       { 
         id: "2", 
         title: "Understanding the dashboard layout", 
         excerpt: "Navigate through the new dashboard efficiently with this quick overview.", 
         readTime: "3 min read",
-        content: "The dashboard is divided into three main sections: the sidebar for navigation, the header for quick actions and profile settings, and the main content area where you manage your active tasks. You can always collapse the sidebar to get more focus area..."
+        content: "The dashboard is divided into three main sections: the sidebar for navigation, the header for quick actions and profile settings, and the main content area where you manage your active tasks. You can always collapse the sidebar to get more focus area."
       },
       { 
         id: "3", 
         title: "Customizing your chatbot's appearance", 
         excerpt: "Make your chatbot match your brand's colors and style.", 
         readTime: "4 min read",
-        content: "Head over to the specific Chatbot's settings page. Under the 'Appearance' tab, you can change the primary color, chatbot avatar, and the initial greeting message. You can preview these changes in real-time in the Playground..."
+        content: "Head over to the specific Chatbot's settings page. Under the 'Appearance' tab, you can change the primary color, chatbot avatar, and the initial greeting message. You can preview these changes in real-time in the Playground."
       },
       { 
         id: "4", 
         title: "Adding knowledge sources", 
         excerpt: "Learn how to train your chatbot using your website or documents.", 
         readTime: "6 min read",
-        content: "Knowledge sources are the brain of your chatbot. Go to the 'Knowledge' tab in your Chatbot settings. Here, you can enter a list of URLs you want the bot to crawl, or upload PDF and TXT files. Once you save, our system will process and index the information..."
+        content: "Knowledge sources are the brain of your chatbot. Go to the 'Knowledge' tab in your Chatbot settings. Here, you can enter a list of URLs you want the bot to crawl, or upload PDF and TXT files. Once you save, our system will process and index the information."
       },
     ],
   },
@@ -90,87 +90,150 @@ export default async function ArticlePage({
   const article = categoryInfo.articles.find(a => a.id === articleId);
   if (!article) notFound();
 
+  // Find related articles
+  const relatedArticles = categoryInfo.articles.filter(a => a.id !== articleId).slice(0, 3);
+
   return (
-    <main className="min-h-screen bg-[#F7F8FC] py-8">
-      <div className="mx-auto max-w-4xl px-6 lg:px-8">
-        
-        {/* Breadcrumb Navigation */}
-        <nav className="mb-8 flex flex-wrap items-center gap-2 text-sm text-slate-500">
-          <Link href="/dashboard/help" className="flex items-center hover:text-violet-600 transition-colors">
-            <ArrowLeft className="mr-1 h-4 w-4" />
-            Help Center
-          </Link>
-          <ChevronRight className="h-4 w-4 text-slate-300" />
-          <Link href={`/dashboard/help/${category}`} className="hover:text-violet-600 transition-colors">
-            {categoryInfo.title}
-          </Link>
-          <ChevronRight className="h-4 w-4 text-slate-300" />
-          <span className="font-medium text-slate-900 truncate max-w-[200px] sm:max-w-xs">{article.title}</span>
-        </nav>
-
-        {/* Article Content */}
-        <article className="rounded-3xl bg-white shadow-sm border border-slate-200/60 overflow-hidden">
-          
-          <div className="p-8 sm:p-10 border-b border-slate-100">
-            <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-6 leading-tight">
-              {article.title}
-            </h1>
+    <main className="min-h-screen bg-white text-slate-900">
+      
+      {/* Top Navigation Bar for Docs */}
+      <div className="border-b border-slate-200 bg-white sticky top-0 z-10">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex h-16 items-center justify-between">
+            <nav className="flex items-center text-sm font-medium text-slate-500">
+              <Link href="/dashboard/help" className="hover:text-slate-900 transition-colors">
+                Help Center
+              </Link>
+              <ChevronRight className="mx-2 h-4 w-4 text-slate-400" />
+              <Link href={`/dashboard/help/${category}`} className="hover:text-slate-900 transition-colors">
+                {categoryInfo.title}
+              </Link>
+              <ChevronRight className="mx-2 h-4 w-4 text-slate-400" />
+              <span className="text-slate-900 truncate max-w-[200px] sm:max-w-xs">{article.title}</span>
+            </nav>
             
-            <div className="flex flex-wrap items-center gap-6 text-sm text-slate-500">
-              <div className="flex items-center">
-                <User className="mr-2 h-4 w-4" />
-                Support Team
-              </div>
-              <div className="flex items-center">
-                <Calendar className="mr-2 h-4 w-4" />
-                Updated today
-              </div>
-              <div className="flex items-center">
-                <Clock className="mr-2 h-4 w-4" />
-                {article.readTime}
-              </div>
+            <div className="flex items-center">
+               <Link href="/dashboard/help" className="text-sm font-medium text-violet-600 hover:text-violet-700 flex items-center gap-1">
+                 <ArrowLeft className="h-4 w-4" />
+                 Back to Help
+               </Link>
             </div>
           </div>
-          
-          <div className="p-8 sm:p-10 prose prose-slate prose-violet max-w-none">
-            <p className="text-lg text-slate-600 leading-relaxed mb-8">
-              {article.content}
-            </p>
-            {/* Extended mock content for realistic feel */}
-            <h3>Next Steps</h3>
-            <p>
-              If you found this guide helpful, make sure to check out our other resources. 
-              Our platform is designed to be intuitive, but having a strong foundation will help you scale your support operations efficiently.
-            </p>
-            <ul>
-              <li>Review your chatbot's settings</li>
-              <li>Add more comprehensive knowledge sources</li>
-              <li>Test the bot extensively in the playground before going live</li>
-            </ul>
-          </div>
+        </div>
+      </div>
 
-          <div className="bg-slate-50/50 p-8 sm:p-10 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-6">
-            <div>
-              <h4 className="text-sm font-semibold text-slate-900 mb-2">Was this article helpful?</h4>
-              <div className="flex items-center gap-3">
-                <button className="flex items-center justify-center h-10 px-4 rounded-full border border-slate-200 bg-white text-slate-600 hover:border-violet-200 hover:text-violet-600 hover:bg-violet-50 transition-colors text-sm font-medium">
-                  <ThumbsUp className="mr-2 h-4 w-4" />
-                  Yes
-                </button>
-                <button className="flex items-center justify-center h-10 px-4 rounded-full border border-slate-200 bg-white text-slate-600 hover:border-red-200 hover:text-red-600 hover:bg-red-50 transition-colors text-sm font-medium">
-                  <ThumbsDown className="mr-2 h-4 w-4" />
-                  No
-                </button>
+      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+        <div className="flex flex-col lg:flex-row gap-16">
+          
+          {/* Main Content */}
+          <article className="flex-1 lg:max-w-3xl">
+            
+            <header className="mb-10">
+              <h1 className="text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl mb-4">
+                {article.title}
+              </h1>
+              <p className="text-lg text-slate-500 leading-relaxed">
+                {article.excerpt}
+              </p>
+              
+              <div className="mt-6 flex items-center gap-4 text-sm text-slate-500 border-t border-slate-100 pt-6">
+                <span>By <strong>SupportPilot Team</strong></span>
+                <span className="text-slate-300">•</span>
+                <span>{article.readTime}</span>
+                <span className="text-slate-300">•</span>
+                <span>Updated recently</span>
+              </div>
+            </header>
+
+            <div className="prose prose-slate prose-violet max-w-none">
+              <p>{article.content}</p>
+              
+              <div className="my-8 rounded-lg border border-blue-100 bg-blue-50/50 p-6 flex gap-4">
+                <Info className="h-5 w-5 text-blue-500 shrink-0 mt-0.5" />
+                <div>
+                  <h4 className="text-sm font-semibold text-blue-900 m-0 mb-1">Pro Tip</h4>
+                  <p className="text-sm text-blue-800/80 m-0 leading-relaxed">
+                    Make sure to test your chatbot in the Playground before deploying it live. This ensures all knowledge is indexed properly and gives you a chance to adjust settings.
+                  </p>
+                </div>
+              </div>
+
+              <h3>Next Steps</h3>
+              <p>
+                If you found this guide helpful, check out our other resources. A strong foundation will help you scale your support operations efficiently.
+              </p>
+              <ul>
+                <li>Review your chatbot's settings to fine-tune its personality</li>
+                <li>Add more comprehensive knowledge sources for better answers</li>
+                <li>Set up integrations to connect the bot to your existing workflow</li>
+              </ul>
+            </div>
+
+            <hr className="my-12 border-slate-200" />
+            
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+              <div>
+                <h4 className="text-sm font-semibold text-slate-900">Was this helpful?</h4>
+                <div className="mt-3 flex items-center gap-3">
+                  <button className="rounded-md bg-white px-3.5 py-2 text-sm font-semibold text-slate-700 shadow-sm ring-1 ring-inset ring-slate-300 hover:bg-slate-50 transition-colors">
+                    Yes
+                  </button>
+                  <button className="rounded-md bg-white px-3.5 py-2 text-sm font-semibold text-slate-700 shadow-sm ring-1 ring-inset ring-slate-300 hover:bg-slate-50 transition-colors">
+                    No
+                  </button>
+                </div>
               </div>
             </div>
-            
-            <button className="flex items-center text-sm font-medium text-slate-500 hover:text-violet-600 transition-colors">
-              <Share2 className="mr-2 h-4 w-4" />
-              Share Article
-            </button>
-          </div>
 
-        </article>
+          </article>
+
+          {/* Clean Right Sidebar */}
+          <aside className="w-full lg:w-72 shrink-0">
+            <div className="sticky top-24 space-y-10">
+              
+              {/* Related Articles */}
+              {relatedArticles.length > 0 && (
+                <div>
+                  <h3 className="text-sm font-semibold text-slate-900 mb-4 flex items-center gap-2">
+                    <FileText className="h-4 w-4 text-slate-400" />
+                    Related articles
+                  </h3>
+                  <ul className="space-y-3">
+                    {relatedArticles.map((rel) => (
+                      <li key={rel.id}>
+                        <Link 
+                          href={`/dashboard/help/${category}/${rel.id}`}
+                          className="group text-sm block"
+                        >
+                          <span className="text-slate-600 group-hover:text-violet-600 transition-colors line-clamp-2 leading-relaxed">
+                            {rel.title}
+                          </span>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {/* Need help */}
+              <div className="rounded-xl border border-slate-200 bg-slate-50 p-6">
+                <h3 className="text-sm font-semibold text-slate-900">Still need help?</h3>
+                <p className="mt-2 text-sm text-slate-500 leading-relaxed">
+                  Our team is available 24/7 to assist you.
+                </p>
+                <Link 
+                  href="/dashboard/help/support" 
+                  className="mt-4 inline-flex items-center text-sm font-medium text-violet-600 hover:text-violet-700 group"
+                >
+                  Contact support
+                  <ArrowUpRight className="ml-1 h-4 w-4 text-violet-400 group-hover:text-violet-600 transition-colors" />
+                </Link>
+              </div>
+
+            </div>
+          </aside>
+
+        </div>
       </div>
     </main>
   );
