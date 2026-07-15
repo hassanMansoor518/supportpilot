@@ -7,31 +7,31 @@ const categoryData: Record<string, { title: string; articles: { id: string; titl
   "getting-started": {
     title: "Getting Started",
     articles: [
-      { 
-        id: "1", 
-        title: "How to create your first chatbot", 
-        excerpt: "A step-by-step guide to setting up your first SupportPilot chatbot.", 
+      {
+        id: "1",
+        title: "How to create your first chatbot",
+        excerpt: "A step-by-step guide to setting up your first SupportPilot chatbot.",
         readTime: "5 min read",
         content: "Creating your first chatbot is easy. First, navigate to the Chatbots section from the left sidebar. Click on the 'Create New Chatbot' button. You'll be prompted to provide a name and a base prompt. Once created, you can start feeding it data via website URLs or document uploads."
       },
-      { 
-        id: "2", 
-        title: "Understanding the dashboard layout", 
-        excerpt: "Navigate through the new dashboard efficiently with this quick overview.", 
+      {
+        id: "2",
+        title: "Understanding the dashboard layout",
+        excerpt: "Navigate through the new dashboard efficiently with this quick overview.",
         readTime: "3 min read",
         content: "The dashboard is divided into three main sections: the sidebar for navigation, the header for quick actions and profile settings, and the main content area where you manage your active tasks. You can always collapse the sidebar to get more focus area."
       },
-      { 
-        id: "3", 
-        title: "Customizing your chatbot's appearance", 
-        excerpt: "Make your chatbot match your brand's colors and style.", 
+      {
+        id: "3",
+        title: "Customizing your chatbot's appearance",
+        excerpt: "Make your chatbot match your brand's colors and style.",
         readTime: "4 min read",
         content: "Head over to the specific Chatbot's settings page. Under the 'Appearance' tab, you can change the primary color, chatbot avatar, and the initial greeting message. You can preview these changes in real-time in the Playground."
       },
-      { 
-        id: "4", 
-        title: "Adding knowledge sources", 
-        excerpt: "Learn how to train your chatbot using your website or documents.", 
+      {
+        id: "4",
+        title: "Adding knowledge sources",
+        excerpt: "Learn how to train your chatbot using your website or documents.",
         readTime: "6 min read",
         content: "Knowledge sources are the brain of your chatbot. Go to the 'Knowledge' tab in your Chatbot settings. Here, you can enter a list of URLs you want the bot to crawl, or upload PDF and TXT files. Once you save, our system will process and index the information."
       },
@@ -83,7 +83,7 @@ export default async function ArticlePage({
   params: Promise<{ category: string; articleId: string }>;
 }) {
   const { category, articleId } = await params;
-  
+
   const categoryInfo = categoryData[category];
   if (!categoryInfo) notFound();
 
@@ -95,7 +95,7 @@ export default async function ArticlePage({
 
   return (
     <main className="min-h-screen bg-white text-slate-900">
-      
+
       {/* Top Navigation Bar for Docs */}
       <div className="border-b border-slate-200 bg-white sticky top-0 z-10">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -111,12 +111,12 @@ export default async function ArticlePage({
               <ChevronRight className="mx-2 h-4 w-4 text-slate-400" />
               <span className="text-slate-900 truncate max-w-[200px] sm:max-w-xs">{article.title}</span>
             </nav>
-            
+
             <div className="flex items-center">
-               <Link href="/dashboard/help" className="text-sm font-medium text-violet-600 hover:text-violet-700 flex items-center gap-1">
-                 <ArrowLeft className="h-4 w-4" />
-                 Back to Help
-               </Link>
+              <Link href="/dashboard/help" className="text-sm font-medium text-violet-600 hover:text-violet-700 flex items-center gap-1">
+                <ArrowLeft className="h-4 w-4" />
+                Back to Help
+              </Link>
             </div>
           </div>
         </div>
@@ -124,10 +124,10 @@ export default async function ArticlePage({
 
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row gap-16">
-          
+
           {/* Main Content */}
           <article className="flex-1 lg:max-w-3xl">
-            
+
             <header className="mb-10">
               <h1 className="text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl mb-4">
                 {article.title}
@@ -135,7 +135,7 @@ export default async function ArticlePage({
               <p className="text-lg text-slate-500 leading-relaxed">
                 {article.excerpt}
               </p>
-              
+
               <div className="mt-6 flex items-center gap-4 text-sm text-slate-500 border-t border-slate-100 pt-6">
                 <span>By <strong>SupportPilot Team</strong></span>
                 <span className="text-slate-300">•</span>
@@ -147,7 +147,7 @@ export default async function ArticlePage({
 
             <div className="prose prose-slate prose-violet max-w-none">
               <p>{article.content}</p>
-              
+
               <div className="my-8 rounded-lg border border-blue-100 bg-blue-50/50 p-6 flex gap-4">
                 <Info className="h-5 w-5 text-blue-500 shrink-0 mt-0.5" />
                 <div>
@@ -170,7 +170,7 @@ export default async function ArticlePage({
             </div>
 
             <hr className="my-12 border-slate-200" />
-            
+
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
               <div>
                 <h4 className="text-sm font-semibold text-slate-900">Was this helpful?</h4>
@@ -190,7 +190,7 @@ export default async function ArticlePage({
           {/* Clean Right Sidebar */}
           <aside className="w-full lg:w-72 shrink-0">
             <div className="sticky top-24 space-y-10">
-              
+
               {/* Related Articles */}
               {relatedArticles.length > 0 && (
                 <div>
@@ -201,7 +201,7 @@ export default async function ArticlePage({
                   <ul className="space-y-3">
                     {relatedArticles.map((rel) => (
                       <li key={rel.id}>
-                        <Link 
+                        <Link
                           href={`/dashboard/help/${category}/${rel.id}`}
                           className="group text-sm block"
                         >
@@ -221,8 +221,8 @@ export default async function ArticlePage({
                 <p className="mt-2 text-sm text-slate-500 leading-relaxed">
                   Our team is available 24/7 to assist you.
                 </p>
-                <Link 
-                  href="/dashboard/help/support" 
+                <Link
+                  href="/dashboard/help/support"
                   className="mt-4 inline-flex items-center text-sm font-medium text-violet-600 hover:text-violet-700 group"
                 >
                   Contact support
