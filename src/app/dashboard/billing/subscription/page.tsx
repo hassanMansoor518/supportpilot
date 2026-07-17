@@ -5,7 +5,7 @@ import { useSubscription } from "@/src/hooks/useSubscription";
 import PlanCard from "@/src/components/billing/PlanCard";
 import PricingComparison from "@/src/components/billing/PricingComparison";
 import UpgradeDialog from "@/src/components/billing/UpgradeDialog";
-import { BillingCycle, PlanType } from "@/src/types/Subscription";
+import { BillingCycle, PlanType, Plan } from "@/src/types/Subscription";
 import { useRouter } from "next/navigation";
 
 export default function SubscriptionPlansPage() {
@@ -63,7 +63,7 @@ export default function SubscriptionPlansPage() {
 
       {/* Pricing Cards Grid — show all plans (Starter is free) */}
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 pt-4">
-        {plans.map((plan) => (
+        {plans.map((plan: Plan) => (
           <PlanCard
             key={plan.id}
             plan={plan}

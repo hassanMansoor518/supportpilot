@@ -62,7 +62,7 @@ export default function ChatbotsPage() {
         </p>
 
         <Link
-          href="/dashboard/ChatbotSettings"
+          href="/dashboard/chatbot-settings"
           className="group relative inline-flex items-center justify-center gap-3 rounded-full bg-slate-900 px-8 py-4 text-sm font-semibold text-white shadow-xl shadow-slate-900/20 transition-all hover:-translate-y-1 hover:shadow-2xl hover:shadow-slate-900/30 hover:bg-slate-800"
         >
           <Plus className="h-5 w-5 transition-transform group-hover:rotate-90" />
@@ -91,7 +91,7 @@ export default function ChatbotsPage() {
         </div>
 
         <Link
-          href="/dashboard/ChatbotSettings"
+          href="/dashboard/chatbot-settings"
           className="group flex items-center justify-center gap-2 rounded-xl bg-indigo-600 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-indigo-200 transition-all hover:-translate-y-0.5 hover:bg-indigo-700 hover:shadow-indigo-300"
         >
           <Plus size={18} className="transition-transform group-hover:rotate-90" />
@@ -149,7 +149,7 @@ export default function ChatbotsPage() {
                   <PlayCircle size={14} />
                   <span className="text-xs font-semibold uppercase tracking-wider">Playground</span>
                 </div>
-                <Link href={`/dashboard/TestPlayground?id=${bot._id}`} className="text-sm font-bold text-indigo-700 hover:text-indigo-800 transition-colors">
+                <Link href={`/dashboard/test-playground?id=${bot._id}`} className="text-sm font-bold text-indigo-700 hover:text-indigo-800 transition-colors">
                   Test Bot &rarr;
                 </Link>
               </div>
@@ -158,14 +158,14 @@ export default function ChatbotsPage() {
             {/* Bottom Row: Actions */}
             <div className="flex items-center gap-3 pt-4 border-t border-slate-100">
               <Link
-                href={`/dashboard/ChatbotSettings?id=${bot._id}`}
+                href={`/dashboard/chatbot-settings?id=${bot._id}`}
                 className="flex-1 flex items-center justify-center gap-2 rounded-xl bg-white border-2 border-slate-200 px-4 py-2.5 text-sm font-bold text-slate-700 transition hover:border-indigo-200 hover:bg-indigo-50 hover:text-indigo-700"
               >
                 <Settings2 size={16} />
                 Settings
               </Link>
               <Link
-                href="/dashboard/Integrations"
+                href="/dashboard/integrations"
                 className="flex-1 flex items-center justify-center gap-2 rounded-xl bg-white border-2 border-slate-200 px-4 py-2.5 text-sm font-bold text-slate-700 transition hover:border-slate-300 hover:bg-slate-50"
               >
                 <Code2 size={16} />

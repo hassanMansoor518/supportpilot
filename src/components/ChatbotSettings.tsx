@@ -421,7 +421,7 @@ export default function ChatbotSettings({ ownerId, botId }: { ownerId: string; b
                 </div>
               </div>
               <Link
-                href="/dashboard/TestPlayground"
+                href="/dashboard/test-playground"
                 className="w-full flex items-center justify-center gap-2 text-indigo-700 bg-indigo-50/80 hover:bg-indigo-100 border border-indigo-200/60 rounded-xl py-3 text-sm font-extrabold transition-all shadow-sm"
               >
                 Open Test Playground

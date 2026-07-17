@@ -62,8 +62,8 @@ export default function IntegrationsContent({ ownerId }: { ownerId: string }) {
           <h2 className="mb-2 text-2xl font-bold text-slate-900">You haven't created a chatbot yet.</h2>
           <p className="mb-8 text-slate-500">Create a chatbot to get your integration embed code.</p>
           <Link
-            href="/dashboard/ChatbotSettings"
-            className="flex items-center gap-2 rounded-xl bg-indigo-600 px-6 py-3 font-semibold text-white shadow-lg transition-all hover:bg-indigo-700"
+            href="/dashboard/chatbot-settings"
+            className="flex items-center justify-center gap-2 bg-slate-900 hover:bg-slate-800 text-white font-semibold text-sm px-6 py-3 rounded-xl transition-all shadow-md shadow-slate-900/20 active:scale-95"
           >
             <Plus size={20} />
             Create Chatbot

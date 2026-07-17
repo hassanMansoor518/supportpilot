@@ -59,8 +59,8 @@ export default function DashboardLeftSide() {
             {/* Sub-items */}
             <div className="ml-6 mt-1 flex flex-col relative before:absolute before:left-2.5 before:top-0 before:bottom-2 before:w-[1px] before:bg-gray-200">
               <Link
-                href="/dashboard/ChatbotSettings"
-                className={`w-full text-left pl-7 py-2 text-sm font-medium rounded-lg mb-1 relative z-10 block transition-colors ${isLinkActive("/dashboard/ChatbotSettings")
+                href="/dashboard/chatbot-settings"
+                className={`w-full text-left pl-7 py-2 text-sm font-medium rounded-lg mb-1 relative z-10 block transition-colors ${isLinkActive("/dashboard/chatbot-settings")
                   ? "text-indigo-600 bg-indigo-50"
                   : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
                   }`}
@@ -78,8 +78,8 @@ export default function DashboardLeftSide() {
               </Link>
 
               <Link
-                href="/dashboard/TestPlayground"
-                className={`w-full text-left pl-7 py-2 text-sm font-medium rounded-lg flex items-center justify-between transition-colors ${isLinkActive("/dashboard/TestPlayground")
+                href="/dashboard/test-playground"
+                className={`w-full text-left pl-7 py-2 text-sm font-medium rounded-lg flex items-center justify-between transition-colors ${isLinkActive("/dashboard/test-playground")
                   ? "text-indigo-600 bg-indigo-50"
                   : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
                   }`}
@@ -91,8 +91,8 @@ export default function DashboardLeftSide() {
                 </span>
               </Link>
               <Link
-                href="/dashboard/Integrations"
-                className={`w-full text-left pl-7 py-2 text-sm font-medium rounded-lg transition-colors ${isLinkActive("/dashboard/Integrations")
+                href="/dashboard/integrations"
+                className={`w-full text-left pl-7 py-2 text-sm font-medium rounded-lg transition-colors ${isLinkActive("/dashboard/integrations")
                   ? "text-indigo-600 bg-indigo-50"
                   : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
                   }`}
