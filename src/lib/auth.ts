@@ -39,18 +39,13 @@ export const authOptions: NextAuthOptions = {
                     throw new Error("Incorrect password");
                 }
                 
-                if (!user.emailVerified) {
-                    // Optional: You can enforce email verification here
-                    // throw new Error("Please verify your email first");
-                }
-
                 return {
                     id: user._id.toString(),
                     name: user.name,
                     email: user.email,
                     image: user.image,
-                    role: user.role
-                } as any;
+                    role: user.role,
+                };
             },
         }),
         GoogleProvider({
@@ -77,17 +72,12 @@ export const authOptions: NextAuthOptions = {
                             provider: account.provider,
                             emailVerified: true
                         });
-                    } else if (existUser.provider !== account.provider) {
-                        // User exists with different provider
-                        // We could throw an error or update the provider
-                        // Here we just allow sign in, but it's good to keep track
                     }
                     
                     user.id = existUser._id.toString();
                     user.role = existUser.role;
                     return true;
-                } catch (error) {
-                    console.error("Error during OAuth sign in:", error);
+                } catch {
                     return false;
                 }
             }
@@ -100,7 +90,7 @@ export const authOptions: NextAuthOptions = {
                 token.name = user.name;
                 token.email = user.email;
                 token.image = user.image;
-                token.role = (user as any).role || 'user';
+                token.role = user.role || 'user';
             }
             if (trigger === "update" && session) {
                 token = { ...token, ...session };

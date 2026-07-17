@@ -94,7 +94,7 @@ export default async function ArticlePage({
   const relatedArticles = categoryInfo.articles.filter(a => a.id !== articleId).slice(0, 3);
 
   return (
-    <main className="min-h-screen bg-white text-slate-900 -m-5">
+    <main className="min-h-screen bg-white text-slate-900 rounded-xl">
 
 
 

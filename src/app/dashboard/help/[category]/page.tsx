@@ -78,23 +78,15 @@ export default async function CategoryPage({
 
   return (
     <main className="min-h-screen bg-[#F7F8FC] py-8">
-      <div className="mx-auto max-w-5xl px-6 lg:px-8">
-        
-        {/* Breadcrumb Navigation */}
-        <nav className="mb-6 flex items-center space-x-2 text-sm text-slate-500">
-          <Link href="/dashboard/help" className="flex items-center hover:text-violet-600 transition-colors">
-            <ArrowLeft className="mr-1 h-4 w-4" />
-            Help Center
-          </Link>
-          <ChevronRight className="h-4 w-4 text-slate-300" />
-          <span className="font-medium text-slate-900">{data.title}</span>
-        </nav>
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+
+
 
         {/* Header Section */}
         <div className={`mb-10 relative overflow-hidden rounded-3xl bg-gradient-to-br ${data.iconBg} p-8 sm:p-12 shadow-lg`}>
-           <div className="absolute top-0 right-0 p-8 opacity-20 pointer-events-none transform translate-x-8 -translate-y-8">
-             <Book className="w-64 h-64 text-white" />
-           </div>
+          <div className="absolute top-0 right-0 p-8 opacity-20 pointer-events-none transform translate-x-8 -translate-y-8">
+            <Book className="w-64 h-64 text-white" />
+          </div>
           <div className="relative z-10">
             <h1 className="text-3xl font-bold text-white tracking-tight sm:text-5xl mb-4">
               {data.title}
@@ -102,7 +94,7 @@ export default async function CategoryPage({
             <p className="text-lg text-white/90 max-w-2xl font-medium">
               {data.description}
             </p>
-            
+
             <div className="mt-8 max-w-md relative">
               <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
                 <Search className="h-5 w-5 text-white/60" />
@@ -127,7 +119,7 @@ export default async function CategoryPage({
               {data.articles.length} total
             </span>
           </div>
-          
+
           <div className="grid gap-4">
             {data.articles.map((article) => (
               <Link
@@ -143,7 +135,7 @@ export default async function CategoryPage({
                     {article.excerpt}
                   </p>
                 </div>
-                
+
                 <div className="mt-4 sm:mt-0 flex items-center text-sm text-slate-400 font-semibold whitespace-nowrap relative z-10">
                   <Clock className="mr-1.5 h-4 w-4 text-slate-300 group-hover:text-violet-400 transition-colors" />
                   {article.readTime}
@@ -151,7 +143,7 @@ export default async function CategoryPage({
                     <ChevronRight className="h-5 w-5" />
                   </div>
                 </div>
-                
+
                 {/* Hover Background Accent */}
                 <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-transparent to-violet-50/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
               </Link>

@@ -63,8 +63,6 @@ export function useSubscription() {
     subscription: subscriptionQuery.data,
     plans: plansQuery.data || [],
     isLoading: subscriptionQuery.isLoading || plansQuery.isLoading,
-    isSubscriptionLoading: subscriptionQuery.isLoading,
-    isPlansLoading: plansQuery.isLoading,
     upgrade: upgradeMutation.mutateAsync,
     isUpgrading: upgradeMutation.isPending,
     cancel: cancelMutation.mutateAsync,

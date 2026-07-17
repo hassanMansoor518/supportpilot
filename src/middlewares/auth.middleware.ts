@@ -6,29 +6,28 @@ import connectDb from "../lib/db";
 
 export type AuthenticatedHandler = (
   req: NextRequest,
-  context: { params: Promise<any> | any; user: { id: string; email: string; name: string; role: string } }
+  context: { params: Promise<Record<string, string>> | Record<string, string>; user: { id: string; email: string; name: string; role: string } }
 ) => Promise<NextResponse>;
 
 export function withAuth(handler: AuthenticatedHandler) {
-  return async (req: NextRequest, context: any) => {
+  return async (req: NextRequest, context: { params: Promise<Record<string, string>> | Record<string, string> }) => {
     try {
       await connectDb();
       const session = await getServerSession(authOptions);
 
-      if (!session || !session.user || !(session.user as any).id) {
+      if (!session?.user?.id) {
         return unauthorizedResponse("You must be logged in to access this resource");
       }
 
       const user = {
-        id: (session.user as any).id,
+        id: session.user.id,
         email: session.user.email || "",
         name: session.user.name || "",
-        role: (session.user as any).role || "user",
+        role: session.user.role || "user",
       };
 
       return await handler(req, { ...context, user });
-    } catch (error) {
-      console.error("Authentication middleware error:", error);
+    } catch {
       return unauthorizedResponse("Authentication failed");
     }
   };

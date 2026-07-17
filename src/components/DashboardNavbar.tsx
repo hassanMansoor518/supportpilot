@@ -3,7 +3,9 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Bell, HelpCircle, Sun, ChevronRight, ChevronDown, LogOut, User } from "lucide-react";
 import { Session } from "next-auth";
+import Link from "next/link";
 import { signOut } from "next-auth/react";
+import { usePathname } from "next/navigation";
 
 interface DashboardNavbarProps {
   session?: Session | null;
@@ -14,6 +16,17 @@ export default function DashboardNavbar({ session }: DashboardNavbarProps) {
   const displayName = user?.name ?? "Guest";
   const displayEmail = user?.email ?? "";
   const displayInitial = displayName.charAt(0).toUpperCase();
+
+  const pathname = usePathname();
+  
+  // Split the pathname and filter out empty strings, pure numbers (like article IDs), and MongoDB ObjectIds
+  const pathSegments = pathname 
+    ? pathname.split('/').filter(Boolean).filter(seg => !/^\d+$/.test(seg) && !/^[0-9a-fA-F]{24}$/.test(seg))
+    : [];
+
+  const formatSegment = (segment: string) => {
+    return segment.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+  };
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -33,14 +46,30 @@ export default function DashboardNavbar({ session }: DashboardNavbarProps) {
     <div className="h-[72px] w-full bg-white border-b border-gray-100 flex items-center justify-between px-6 font-sans">
       {/* Left: Breadcrumbs */}
       <div className="flex items-center gap-2 text-sm font-medium">
-        <span className="text-gray-500 hover:text-gray-900 cursor-pointer transition-colors">
-          Settings
-        </span>
-        <ChevronRight size={16} className="text-gray-400" />
-        <div className="flex items-center gap-1 cursor-pointer">
-          <span className="text-gray-900">Chatbot Settings</span>
-          <ChevronDown size={14} className="text-gray-500 mt-0.5" />
-        </div>
+        {pathSegments.length === 0 ? (
+          <span className="text-gray-900">Dashboard</span>
+        ) : (
+          pathSegments.map((segment, index) => {
+            const isLast = index === pathSegments.length - 1;
+            const href = '/' + pathSegments.slice(0, index + 1).join('/');
+            const formatted = formatSegment(segment);
+            
+            return (
+              <React.Fragment key={href}>
+                {index > 0 && <ChevronRight size={16} className="text-gray-400" />}
+                {isLast ? (
+                  <div className="flex items-center gap-1 cursor-default">
+                    <span className="text-gray-900">{formatted}</span>
+                  </div>
+                ) : (
+                  <Link href={href} className="text-gray-500 hover:text-gray-900 transition-colors">
+                    {formatted}
+                  </Link>
+                )}
+              </React.Fragment>
+            );
+          })
+        )}
       </div>
 
       {/* Right: Icons, Profile */}
@@ -54,9 +83,9 @@ export default function DashboardNavbar({ session }: DashboardNavbarProps) {
             </div>
           </button>
 
-          <button className="hover:text-gray-900 transition-colors">
+          <Link href="/dashboard/help" className="hover:text-gray-900 transition-colors">
             <HelpCircle size={20} />
-          </button>
+          </Link>
 
           <button className="hover:text-gray-900 transition-colors">
             <Sun size={20} />

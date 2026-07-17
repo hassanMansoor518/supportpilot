@@ -5,7 +5,6 @@ import React from "react";
 export default function BillingSkeleton() {
   return (
     <div className="space-y-8 animate-pulse font-sans w-full">
-      {/* Current plan card skeleton */}
       <div className="bg-white border border-gray-150 rounded-2xl p-6 space-y-4">
         <div className="flex justify-between items-center">
           <div className="space-y-2">
@@ -21,7 +20,6 @@ export default function BillingSkeleton() {
         </div>
       </div>
 
-      {/* Grid of cards skeleton */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {[1, 2, 3].map((i) => (
           <div key={i} className="bg-white border border-gray-150 rounded-2xl p-5 space-y-4">
@@ -39,7 +37,6 @@ export default function BillingSkeleton() {
         ))}
       </div>
 
-      {/* Table skeleton */}
       <div className="bg-white border border-gray-150 rounded-2xl shadow-sm overflow-hidden">
         <div className="p-5 border-b border-gray-100 flex justify-between items-center">
           <div className="h-9 bg-gray-150 rounded-xl w-64" />

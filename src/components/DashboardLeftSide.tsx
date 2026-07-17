@@ -1,22 +1,8 @@
 "use client";
 
 import React from "react";
-import {
-  Bot,
-  ChevronDown,
-  ChevronUp,
-  Home,
-  Puzzle,
-  Calendar,
-  Settings,
-  Crown,
-  ArrowRight,
-  CircleHelp,
-  LayoutDashboard,
-  CreditCard,
-  FileText,
-  BarChart3,
-} from "lucide-react";
+import { Bot, ChevronDown, ChevronUp, Calendar, Crown, ArrowRight, CircleHelp } from "lucide-react";
+
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useBilling } from "@/src/hooks/useBilling";

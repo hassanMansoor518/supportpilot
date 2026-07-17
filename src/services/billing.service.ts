@@ -11,8 +11,5 @@ export const billingService = {
 
     return data.data as BillingOverview;
   },
-
-  resetDemoState: async (_type?: "new" | "free" | "pro"): Promise<BillingOverview> => {
-    return billingService.getOverview();
-  }
 };
+
