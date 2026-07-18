@@ -145,10 +145,8 @@ Ensure you have the following installed on your local machine:
    NEXTAUTH_URL=http://localhost:3000
    NEXTAUTH_SECRET=your_super_secret_key
 
-   # Stripe
-   STRIPE_SECRET_KEY=sk_test_...
-   NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_...
-   STRIPE_WEBHOOK_SECRET=whsec_...
+   # Ai engine
+   GEMINI_API_KEY=your_API_key
    ```
 
 ### Running the Application
