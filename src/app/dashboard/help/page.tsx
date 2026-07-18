@@ -8,7 +8,7 @@ import SupportCard from "@/components/help-center/SupportCard";
 export default function HelpCenterPage() {
   return (
     <main className="min-h-screen bg-[#F7F8FC]">
-      <div className="mx-auto max-w-7xl px-6 py-8 lg:px-8">
+      <div className="mx-auto max-w-7xl px-2 sm:px-6 py-6 sm:py-8 lg:px-8">
         {/* Hero */}
         <Hero />
 

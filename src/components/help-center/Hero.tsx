@@ -32,7 +32,7 @@ export default function Hero() {
         />
       </div>
 
-      <div className="relative grid min-h-[500px] items-center gap-14 px-8 py-14 lg:grid-cols-[1fr_360px] lg:px-16">
+      <div className="relative grid min-h-[500px] items-center gap-10 lg:gap-14 px-4 sm:px-8 py-10 lg:py-14 lg:grid-cols-[1fr_360px] lg:px-16">
         {/* Left */}
         <div>
           {/* Badge */}
@@ -89,7 +89,7 @@ export default function Hero() {
           </div>
 
           {/* Floating Card */}
-          <div className="absolute -bottom-6 -left-8 rounded-2xl border border-white/70 bg-white/90 px-5 py-4 shadow-xl backdrop-blur">
+          <div className="absolute -bottom-6 left-2 sm:-left-8 rounded-2xl border border-white/70 bg-white/90 px-5 py-4 shadow-xl backdrop-blur z-20">
             <p className="text-xs font-medium uppercase tracking-widest text-slate-400">
               Articles
             </p>

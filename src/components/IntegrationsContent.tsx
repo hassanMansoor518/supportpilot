@@ -76,7 +76,7 @@ export default function IntegrationsContent({ ownerId }: { ownerId: string }) {
 
   return (
     <div className="mx-auto mt-5 max-w-[1160px] pb-10">
-      <div className="mb-8 rounded-[30px] border border-slate-200/70 bg-gradient-to-br from-white via-indigo-50/40 to-violet-50/50 p-6 shadow-[0_18px_50px_rgba(15,23,42,0.06)]">
+      <div className="mb-8 rounded-[30px] border border-slate-200/70 bg-gradient-to-br from-white via-indigo-50/40 to-violet-50/50 p-5 sm:p-6 shadow-[0_18px_50px_rgba(15,23,42,0.06)]">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-2xl">
             <div className="mb-3 flex items-center gap-2 text-sm font-semibold text-indigo-600">
@@ -104,7 +104,7 @@ export default function IntegrationsContent({ ownerId }: { ownerId: string }) {
           const isCopied = copiedKeys[bot.chatbotKey];
 
           return (
-            <div key={bot.chatbotKey} className="rounded-[28px] border border-slate-200/80 bg-white p-6 shadow-[0_18px_50px_rgba(15,23,42,0.06)]">
+            <div key={bot.chatbotKey} className="rounded-[28px] border border-slate-200/80 bg-white p-4 sm:p-6 shadow-[0_18px_50px_rgba(15,23,42,0.06)]">
               <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
                 <div className="flex items-center gap-3">
                   <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-600 text-white shadow-lg shadow-indigo-200">
@@ -190,7 +190,7 @@ export default function IntegrationsContent({ ownerId }: { ownerId: string }) {
         </div>
       </div>
 
-      <div className="rounded-[28px] border border-slate-200/80 bg-white p-6 shadow-[0_18px_50px_rgba(15,23,42,0.06)]">
+      <div className="rounded-[28px] border border-slate-200/80 bg-white p-4 sm:p-6 shadow-[0_18px_50px_rgba(15,23,42,0.06)] mt-6">
         <div className="mb-5 flex items-center gap-3">
           <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-600 text-white shadow-lg shadow-indigo-200">
             <Eye size={18} />
@@ -208,16 +208,16 @@ export default function IntegrationsContent({ ownerId }: { ownerId: string }) {
               <div className="h-3 w-3 rounded-full bg-[#ffbd2e]" />
               <div className="h-3 w-3 rounded-full bg-[#27c93f]" />
             </div>
-            <div className="flex flex-1 justify-center">
-              <div className="flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-4 py-1.5 text-sm text-slate-500">
-                <Lock size={12} />
-                <span>Your-website.com</span>
+            <div className="flex flex-1 justify-center min-w-0">
+              <div className="flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-4 py-1.5 text-sm text-slate-500 max-w-full">
+                <Lock size={12} className="flex-shrink-0" />
+                <span className="truncate">Your-website.com</span>
               </div>
             </div>
             <RotateCw size={16} className="text-slate-400" />
           </div>
 
-          <div className="relative h-[420px] bg-[radial-gradient(circle_at_top_left,_rgba(99,102,241,0.08),_transparent_30%),linear-gradient(180deg,_#ffffff_0%,_#f8faff_100%)] p-8">
+          <div className="relative h-[420px] bg-[radial-gradient(circle_at_top_left,_rgba(99,102,241,0.08),_transparent_30%),linear-gradient(180deg,_#ffffff_0%,_#f8faff_100%)] p-4 sm:p-8">
             <div className="max-w-lg">
               <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-indigo-200 bg-indigo-50 px-3 py-1 text-sm font-medium text-indigo-700">
                 <Bot size={14} />
@@ -234,8 +234,8 @@ export default function IntegrationsContent({ ownerId }: { ownerId: string }) {
               </div>
             </div>
 
-            <div className="absolute bottom-6 right-6 flex flex-col items-end gap-4 rounded-[28px]">
-              <div className="w-[320px] overflow-hidden rounded-[24px] border border-slate-200 bg-white shadow-[0_16px_45px_rgba(15,23,42,0.16)]">
+            <div className="absolute bottom-4 right-4 sm:bottom-6 sm:right-6 flex flex-col items-end gap-4 rounded-[28px] max-w-[calc(100%-32px)] sm:max-w-[calc(100%-48px)]">
+              <div className="w-full max-w-[320px] sm:w-[320px] overflow-hidden rounded-[24px] border border-slate-200 bg-white shadow-[0_16px_45px_rgba(15,23,42,0.16)]">
                 <div className="flex items-center justify-between bg-slate-900 px-4 py-3">
                   <div className="flex items-center gap-2">
                     <div className="flex h-8 w-8 items-center justify-center rounded-2xl bg-indigo-500/20 text-indigo-300">

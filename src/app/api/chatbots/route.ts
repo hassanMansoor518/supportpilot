@@ -8,8 +8,25 @@ import { subscriptionService } from "@/src/services/server/subscription.service"
 // GET all chatbots for the user
 export const GET = withAuth(async (req: NextRequest, { user }) => {
   try {
-    const chatbots = await Chatbot.find({ ownerId: user.id }).sort({ createdAt: -1 });
-    return successResponse(chatbots, "Chatbots retrieved successfully");
+    const [chatbots, usage] = await Promise.all([
+      Chatbot.find({ ownerId: user.id }).sort({ createdAt: -1 }),
+      usageRepository.findOrCreateByUserId(user.id),
+    ]);
+
+    // Merge per-bot message count from usage.botUsage
+    const botUsageMap = new Map<string, number>();
+    (usage.botUsage || []).forEach(
+      ({ botName, messages }: { botName: string; messages: number }) => {
+        botUsageMap.set(botName, messages);
+      }
+    );
+
+    const enriched = chatbots.map((bot) => ({
+      ...bot.toObject(),
+      messageCount: botUsageMap.get(bot.chatbotName) ?? 0,
+    }));
+
+    return successResponse(enriched, "Chatbots retrieved successfully");
   } catch (error: any) {
     return errorResponse(error.message || "Failed to retrieve chatbots", 500);
   }

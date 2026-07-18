@@ -41,7 +41,7 @@ export default function BotIllustration() {
             <motion.div
                 animate={{ y: [0, -12, 0] }}
                 transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                className="relative"
+                className="relative scale-[0.8] sm:scale-100 origin-center"
             >
                 {/* Antenna */}
                

@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import authOptions from "@/src/lib/auth";
 import DashboardLeftSide from "@/src/components/DashboardLeftSide";
 import DashboardNavbar from "@/src/components/DashboardNavbar";
+import { SidebarProvider } from "@/src/components/providers/SidebarProvider";
 
 export default async function DashboardLayout({
   children,
@@ -16,14 +17,16 @@ export default async function DashboardLayout({
   }
 
   return (
-    <div className="flex h-screen bg-[#fafafa] overflow-hidden">
-      <DashboardLeftSide />
-      <div className="flex-1 flex flex-col min-w-0">
-        <DashboardNavbar session={session} />
-        <div className="flex-1 p-5 lg:p-5 overflow-auto">
-          {children}
+    <SidebarProvider>
+      <div className="flex h-screen bg-[#fafafa] overflow-hidden">
+        <DashboardLeftSide />
+        <div className="flex-1 flex flex-col min-w-0">
+          <DashboardNavbar session={session} />
+          <div className="flex-1 p-4 sm:p-5 lg:p-5 overflow-auto">
+            {children}
+          </div>
         </div>
       </div>
-    </div>
+    </SidebarProvider>
   );
 }

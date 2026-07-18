@@ -1,11 +1,12 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import { Bell, HelpCircle, Sun, ChevronRight, ChevronDown, LogOut, User } from "lucide-react";
+import { Bell, HelpCircle, Sun, ChevronRight, ChevronDown, LogOut, User, Menu } from "lucide-react";
 import { Session } from "next-auth";
 import Link from "next/link";
 import { signOut } from "next-auth/react";
 import { usePathname } from "next/navigation";
+import { useSidebar } from "@/src/components/providers/SidebarProvider";
 
 interface DashboardNavbarProps {
   session?: Session | null;
@@ -42,10 +43,20 @@ export default function DashboardNavbar({ session }: DashboardNavbarProps) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  const { toggle } = useSidebar();
+
   return (
-    <div className="h-[72px] w-full bg-white border-b border-gray-100 flex items-center justify-between px-6 font-sans">
-      {/* Left: Breadcrumbs */}
-      <div className="flex items-center gap-2 text-sm font-medium">
+    <div className="h-[72px] w-full bg-white border-b border-gray-100 flex items-center justify-between px-4 sm:px-6 font-sans">
+      {/* Left: Hamburger & Breadcrumbs */}
+      <div className="flex items-center gap-3">
+        <button 
+          onClick={toggle}
+          className="md:hidden p-2 text-gray-500 hover:text-gray-900 transition-colors rounded-lg hover:bg-gray-100"
+        >
+          <Menu size={24} />
+        </button>
+        
+        <div className="hidden sm:flex items-center gap-2 text-sm font-medium">
         {pathSegments.length === 0 ? (
           <span className="text-gray-900">Dashboard</span>
         ) : (
@@ -71,11 +82,12 @@ export default function DashboardNavbar({ session }: DashboardNavbarProps) {
           })
         )}
       </div>
+      </div>
 
       {/* Right: Icons, Profile */}
-      <div className="flex items-center gap-5">
+      <div className="flex items-center gap-3 sm:gap-5">
         {/* Action Icons */}
-        <div className="flex items-center gap-4 text-gray-500">
+        <div className="flex items-center gap-2 sm:gap-4 text-gray-500">
           <button className="relative hover:text-gray-900 transition-colors">
             <Bell size={20} />
             <div className="absolute -top-1.5 -right-1.5 w-4 h-4 bg-indigo-600 rounded-full flex items-center justify-center text-[9px] font-bold text-white border-2 border-white">
@@ -108,7 +120,7 @@ export default function DashboardNavbar({ session }: DashboardNavbarProps) {
               <div className="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 rounded-full border-2 border-white"></div>
             </div>
 
-            <div className="flex items-center gap-4">
+            <div className="hidden sm:flex items-center gap-4">
               <div className="flex flex-col items-start">
                 <span className="text-sm font-semibold text-gray-900 leading-tight capitalize">
                   {displayName}

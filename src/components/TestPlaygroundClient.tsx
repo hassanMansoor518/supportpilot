@@ -386,11 +386,11 @@ export default function TestPlaygroundClient({ ownerId }: { ownerId?: string }) 
   }
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full ">
       {/* ── Page Header ── */}
 
-      <div className="flex items-start justify-between mb-5">
-        <div className="ml-2 mt-3 flex gap-5 items-center">
+      <div className="flex flex-col sm:flex-row sm:items-start justify-between mb-5">
+        <div className="mt-3 flex gap-5 items-center">
           <div>
             <h1 className="text-2xl font-semibold tracking-tight text-slate-900">Test Playground</h1>
             <p className="mt-1 text-sm text-slate-500">
@@ -398,21 +398,21 @@ export default function TestPlaygroundClient({ ownerId }: { ownerId?: string }) 
             </p>
           </div>
         </div>
-        <button className="flex items-center gap-2 rounded-xl border border-indigo-200 bg-indigo-50 px-4 py-2 mt-4 mr-6 text-sm font-medium text-indigo-700 transition-all duration-200 hover:-translate-y-0.5 hover:bg-indigo-100">
+        <button className="flex items-center gap-2 rounded-xl border border-indigo-200 bg-indigo-50 px-4 py-2 mt-4 sm:mr-6 text-sm font-medium text-indigo-700 transition-all duration-200 hover:-translate-y-0.5 hover:bg-indigo-100 w-full sm:w-auto justify-center">
           View Full Logs
           <ExternalLink size={14} />
         </button>
       </div>
 
-      <div className="flex min-h-0 flex-1 gap-5 overflow-hidden">
-        <div className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-xl border border-slate-200/80 bg-white/85 shadow-[0_24px_70px_rgba(15,23,42,0.08)] backdrop-blur">
-          <div className="flex items-center justify-between border-b border-slate-100 px-6 py-4">
+      <div className="flex flex-col lg:flex-row min-h-0 flex-1 gap-5 overflow-y-auto lg:overflow-hidden pb-4 lg:pb-0">
+        <div className="flex min-h-[500px] lg:min-h-0 flex-1 flex-col overflow-hidden rounded-xl border border-slate-200/80 bg-white/85 shadow-[0_24px_70px_rgba(15,23,42,0.08)] backdrop-blur">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-100 px-4 sm:px-6 py-4 gap-4">
             <div className="flex items-center gap-3">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-600 shadow-lg shadow-indigo-200">
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-600 shadow-lg shadow-indigo-200 flex-shrink-0">
                 <Bot size={20} className="text-white" />
               </div>
               <div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 flex-wrap">
                   <span className="text-sm font-semibold text-slate-900">
                     {selectedBot ? selectedBot.chatbotName : "SupportPilot Bot"}
                   </span>
@@ -426,7 +426,7 @@ export default function TestPlaygroundClient({ ownerId }: { ownerId?: string }) 
             <button
               onClick={clearChat}
               disabled={isClearing || messages.length === 0}
-              className="flex items-center gap-1.5 rounded-2xl border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-medium text-slate-600 transition-all duration-200 hover:border-red-200 hover:bg-red-50 hover:text-red-500 disabled:cursor-not-allowed disabled:opacity-40"
+              className="w-full sm:w-auto flex items-center justify-center gap-1.5 rounded-2xl border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-medium text-slate-600 transition-all duration-200 hover:border-red-200 hover:bg-red-50 hover:text-red-500 disabled:cursor-not-allowed disabled:opacity-40"
             >
               {isClearing ? (
                 <Loader2 size={14} className="animate-spin" />
@@ -437,7 +437,7 @@ export default function TestPlaygroundClient({ ownerId }: { ownerId?: string }) 
             </button>
           </div>
 
-          <div className="flex-1 space-y-6 overflow-y-auto px-6 py-6">
+          <div className="flex-1 space-y-6 overflow-y-auto scrollbar-hide px-6 py-6">
             {isLoadingHistory && (
               <div className="flex h-32 items-center justify-center gap-2 text-sm text-slate-400">
                 <Loader2 size={18} className="animate-spin" />
@@ -470,11 +470,11 @@ export default function TestPlaygroundClient({ ownerId }: { ownerId?: string }) 
                         <span>•</span>
                         <span>{msg.time}</span>
                       </div>
-                      <div className="flex max-w-[72%] items-end gap-3">
+                      <div className="flex max-w-[85%] sm:max-w-[72%] items-end gap-3">
                         <div className="rounded-[20px] rounded-br-[6px] bg-gradient-to-br from-indigo-600 to-violet-600 px-4 py-3 text-sm font-medium text-white shadow-[0_16px_35px_rgba(99,102,241,0.25)]">
                           {msg.content}
                         </div>
-                        <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-slate-100 shadow-sm">
+                        <div className="hidden sm:flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-slate-100 shadow-sm">
                           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-slate-500">
                             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
                             <circle cx="12" cy="7" r="4" />
@@ -493,11 +493,11 @@ export default function TestPlaygroundClient({ ownerId }: { ownerId?: string }) 
                         <span>•</span>
                         <span>{msg.time}</span>
                       </div>
-                      <div className="flex max-w-[74%] items-start gap-3">
-                        <div className="mt-1 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-indigo-100 to-violet-100 shadow-sm ring-1 ring-indigo-100">
+                      <div className="flex max-w-[90%] sm:max-w-[74%] items-start gap-2 sm:gap-3">
+                        <div className="hidden sm:flex mt-1 h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-indigo-100 to-violet-100 shadow-sm ring-1 ring-indigo-100">
                           <Bot size={18} className="text-indigo-600" />
                         </div>
-                        <div className="group relative rounded-[20px] rounded-bl-[6px] border border-slate-200/80 bg-white px-4 py-3.5 shadow-[0_16px_35px_rgba(15,23,42,0.06)]">
+                        <div className="group relative rounded-[20px] rounded-bl-[6px] sm:rounded-bl-[6px] border border-slate-200/80 bg-white px-4 py-3.5 shadow-[0_16px_35px_rgba(15,23,42,0.06)]">
                           <BotMessageContent content={msg.content} />
                           {msg.source === "knowledge_base" && (
                             <div className="mt-3 flex items-center gap-1.5 rounded-full bg-indigo-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-indigo-600">
@@ -558,7 +558,7 @@ export default function TestPlaygroundClient({ ownerId }: { ownerId?: string }) 
           <div className="border-t border-slate-100 bg-white/70 px-6 py-4 backdrop-blur">
             <div className="rounded-[24px] border border-slate-200/80 bg-white p-3 shadow-[0_12px_30px_rgba(15,23,42,0.06)] transition-all duration-200 focus-within:border-indigo-300 focus-within:ring-2 focus-within:ring-indigo-100">
               <div className="flex items-end gap-2">
-                
+
                 <div className="flex-1">
                   <textarea
                     ref={textareaRef}
@@ -570,7 +570,7 @@ export default function TestPlaygroundClient({ ownerId }: { ownerId?: string }) 
                     className="w-full resize-none overflow-hidden bg-transparent py-2.5 text-[0.95rem] text-slate-700 placeholder:text-slate-400 outline-none"
                   />
                 </div>
-               
+
                 <button
                   onClick={() => sendMessage(input)}
                   disabled={!input.trim() || isTyping}
@@ -588,168 +588,145 @@ export default function TestPlaygroundClient({ ownerId }: { ownerId?: string }) 
         </div>
 
         {/* ── RIGHT: Settings Panel ── */}
-    <div className="
-w-[310px]
-h-full
-flex
-flex-col
-gap-5
-overflow-y-auto
-px-1
-pb-6
-">
+        <div className="w-full lg:w-[310px] h-auto lg:h-full flex flex-col gap-5 overflow-visible lg:overflow-y-auto scrollbar-hide px-1 pb-6 mt-4 lg:mt-0">
+          {/* Header */}
+
+          <div>
+
+            <h1 className="text-[15px] font-semibold tracking-tight text-gray-900">
+              Test Bot
+            </h1>
+
+            <p className="text-[12px] text-gray-500 mt-1 leading-relaxed">
+              Select your chatbot and test its
+              responses in real-time.
+            </p>
 
 
-{/* Header */}
-
-<div>
-
-<h1 className="
-text-[15px]
-font-semibold
-tracking-tight
-text-gray-900
-">
-Test Bot
-</h1>
-
-
-<p className="
-text-[12px]
-text-gray-500
-mt-1
-leading-relaxed
-">
-Select your chatbot and test its
-responses in real-time.
-</p>
-
-
-</div>
+          </div>
 
 
 
-{/* Bot Dropdown */}
+          {/* Bot Dropdown */}
 
-<div className="relative">
-  {/* Trigger */}
-  <button
-    onClick={() => setIsBotDropdownOpen((o) => !o)}
-    className="w-full group bg-white border border-gray-200 rounded-xl px-3.5 py-3 flex items-center justify-between hover:border-indigo-400 hover:shadow-sm transition cursor-pointer"
-  >
-    {isLoadingBots ? (
-      <div className="flex items-center gap-2 text-gray-400">
-        <Loader2 size={15} className="animate-spin" />
-        <span className="text-sm">Loading bots...</span>
-      </div>
-    ) : selectedBot ? (
-      <div className="flex items-center gap-3">
-        <div
-          className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
-          style={{ backgroundColor: selectedBot.themeColor + "22" }}
-        >
-          <Bot size={15} style={{ color: selectedBot.themeColor }} />
-        </div>
-        <div className="text-left">
-          <p className="text-sm font-medium text-gray-800">{selectedBot.chatbotName}</p>
-          <p className="text-[11px] text-gray-400">{selectedBot.aiModel}</p>
-        </div>
-      </div>
-    ) : (
-      <div className="flex items-center gap-2 text-gray-400">
-        <Bot size={15} />
-        <span className="text-sm">No chatbot available</span>
-      </div>
-    )}
-    <ChevronDown
-      size={15}
-      className={`text-gray-400 group-hover:text-indigo-500 transition-transform duration-200 ${isBotDropdownOpen ? "rotate-180 text-indigo-500" : ""}`}
-    />
-  </button>
+          <div className="relative">
+            {/* Trigger */}
+            <button
+              onClick={() => setIsBotDropdownOpen((o) => !o)}
+              className="w-full group bg-white border border-gray-200 rounded-xl px-3.5 py-3 flex items-center justify-between hover:border-indigo-400 hover:shadow-sm transition cursor-pointer"
+            >
+              {isLoadingBots ? (
+                <div className="flex items-center gap-2 text-gray-400">
+                  <Loader2 size={15} className="animate-spin" />
+                  <span className="text-sm">Loading bots...</span>
+                </div>
+              ) : selectedBot ? (
+                <div className="flex items-center gap-3">
+                  <div
+                    className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
+                    style={{ backgroundColor: selectedBot.themeColor + "22" }}
+                  >
+                    <Bot size={15} style={{ color: selectedBot.themeColor }} />
+                  </div>
+                  <div className="text-left">
+                    <p className="text-sm font-medium text-gray-800">{selectedBot.chatbotName}</p>
+                    <p className="text-[11px] text-gray-400">{selectedBot.aiModel}</p>
+                  </div>
+                </div>
+              ) : (
+                <div className="flex items-center gap-2 text-gray-400">
+                  <Bot size={15} />
+                  <span className="text-sm">No chatbot available</span>
+                </div>
+              )}
+              <ChevronDown
+                size={15}
+                className={`text-gray-400 group-hover:text-indigo-500 transition-transform duration-200 ${isBotDropdownOpen ? "rotate-180 text-indigo-500" : ""}`}
+              />
+            </button>
 
-  {/* Dropdown List */}
-  {isBotDropdownOpen && chatbots.length > 0 && (
-    <div className="absolute z-20 mt-2 w-full rounded-xl border border-gray-200 bg-white shadow-lg overflow-hidden">
-      <div className="px-3 pt-2 pb-1">
-        <p className="text-[10px] font-semibold uppercase tracking-widest text-gray-400">Your Chatbots</p>
-      </div>
-      {chatbots.map((bot) => (
-        <button
-          key={bot._id}
-          onClick={() => {
-            setSelectedBot(bot);
-            setMessages([]);
-            setIsBotDropdownOpen(false);
-          }}
-          className={`w-full flex items-center gap-3 px-3.5 py-2.5 text-left text-sm transition hover:bg-indigo-50 ${
-            selectedBot?._id === bot._id
-              ? "bg-indigo-50 text-indigo-700 font-semibold"
-              : "text-gray-700"
-          }`}
-        >
-          <span
-            className="h-2.5 w-2.5 rounded-full flex-shrink-0"
-            style={{ backgroundColor: bot.themeColor }}
-          />
-          <span className="flex-1 truncate">{bot.chatbotName}</span>
-          {selectedBot?._id === bot._id && (
-            <span className="text-[10px] font-bold text-indigo-500">Active</span>
-          )}
-        </button>
-      ))}
-      <div className="border-t border-gray-100 px-3.5 py-2">
-        <a
-          href="/dashboard/ChatbotSettings"
-          className="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-600 hover:underline"
-        >
-          + Create New Chatbot
-        </a>
-      </div>
-    </div>
-  )}
+            {/* Dropdown List */}
+            {isBotDropdownOpen && chatbots.length > 0 && (
+              <div className="absolute z-20 mt-2 w-full rounded-xl border border-gray-200 bg-white shadow-lg overflow-hidden">
+                <div className="px-3 pt-2 pb-1">
+                  <p className="text-[10px] font-semibold uppercase tracking-widest text-gray-400">Your Chatbots</p>
+                </div>
+                {chatbots.map((bot) => (
+                  <button
+                    key={bot._id}
+                    onClick={() => {
+                      setSelectedBot(bot);
+                      setMessages([]);
+                      setIsBotDropdownOpen(false);
+                    }}
+                    className={`w-full flex items-center gap-3 px-3.5 py-2.5 text-left text-sm transition hover:bg-indigo-50 ${selectedBot?._id === bot._id
+                      ? "bg-indigo-50 text-indigo-700 font-semibold"
+                      : "text-gray-700"
+                      }`}
+                  >
+                    <span
+                      className="h-2.5 w-2.5 rounded-full flex-shrink-0"
+                      style={{ backgroundColor: bot.themeColor }}
+                    />
+                    <span className="flex-1 truncate">{bot.chatbotName}</span>
+                    {selectedBot?._id === bot._id && (
+                      <span className="text-[10px] font-bold text-indigo-500">Active</span>
+                    )}
+                  </button>
+                ))}
+                <div className="border-t border-gray-100 px-3.5 py-2">
+                  <a
+                    href="/dashboard/ChatbotSettings"
+                    className="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-600 hover:underline"
+                  >
+                    + Create New Chatbot
+                  </a>
+                </div>
+              </div>
+            )}
 
-  {isBotDropdownOpen && chatbots.length === 0 && !isLoadingBots && (
-    <div className="absolute z-20 mt-2 w-full rounded-xl border border-gray-200 bg-white shadow-lg p-4 text-center">
-      <p className="text-sm text-gray-500">No chatbots found.</p>
-      <a
-        href="/dashboard/ChatbotSettings"
-        className="mt-2 inline-block text-xs font-semibold text-indigo-600 hover:underline"
-      >
-        Create your first chatbot
-      </a>
-    </div>
-  )}
-</div>
+            {isBotDropdownOpen && chatbots.length === 0 && !isLoadingBots && (
+              <div className="absolute z-20 mt-2 w-full rounded-xl border border-gray-200 bg-white shadow-lg p-4 text-center">
+                <p className="text-sm text-gray-500">No chatbots found.</p>
+                <a
+                  href="/dashboard/ChatbotSettings"
+                  className="mt-2 inline-block text-xs font-semibold text-indigo-600 hover:underline"
+                >
+                  Create your first chatbot
+                </a>
+              </div>
+            )}
+          </div>
 
-{/* Settings */}
-
-
-<div>
+          {/* Settings */}
 
 
-<h2 className="
+          <div>
+
+
+            <h2 className="
 text-[12px]
 font-semibold
 text-gray-800
 mb-2
 ">
-Test Settings
-</h2>
+              Test Settings
+            </h2>
 
 
-<div
-className="
+            <div
+              className="
 rounded-xl
 border
 border-gray-200
 bg-white
 overflow-hidden
 "
->
+            >
 
 
 
-<div className="
+              <div className="
 flex
 items-center
 justify-between
@@ -760,16 +737,16 @@ border-gray-100
 ">
 
 
-<span className="
+                <span className="
 text-xs
 text-gray-600
 ">
-Language
-</span>
+                  Language
+                </span>
 
 
-<button
-className="
+                <button
+                  className="
 flex
 items-center
 gap-2
@@ -782,22 +759,22 @@ rounded-md
 px-2.5
 py-1.5
 "
->
+                >
 
-English (US)
+                  English (US)
 
-<ChevronDown size={12}/>
+                  <ChevronDown size={12} />
 
-</button>
-
-
-</div>
+                </button>
 
 
+              </div>
 
 
 
-<div className="
+
+
+              <div className="
 flex
 justify-between
 items-center
@@ -807,21 +784,21 @@ border-b
 border-gray-100
 ">
 
-<span className="text-xs text-gray-600">
-Use Latest Model
-</span>
+                <span className="text-xs text-gray-600">
+                  Use Latest Model
+                </span>
 
 
-<Toggle on={useLatestModel}/>
+                <Toggle on={useLatestModel} />
 
 
-</div>
+              </div>
 
 
 
 
 
-<div className="
+              <div className="
 flex
 justify-between
 items-center
@@ -830,43 +807,43 @@ py-3
 ">
 
 
-<span className="text-xs text-gray-600">
-Show Sources
-</span>
+                <span className="text-xs text-gray-600">
+                  Show Sources
+                </span>
 
 
-<Toggle on={showSources}/>
+                <Toggle on={showSources} />
 
 
-</div>
+              </div>
 
 
-</div>
+            </div>
 
 
-</div>
-
-
-
+          </div>
 
 
 
 
-{/* Tips */}
 
 
-<div
-className="
+
+          {/* Tips */}
+
+
+          <div
+            className="
 rounded-xl
 bg-indigo-50
 border
 border-indigo-100
 p-4
 "
->
+          >
 
 
-<div className="
+            <div className="
 flex
 gap-2
 items-center
@@ -874,8 +851,8 @@ mb-2
 ">
 
 
-<div
-className="
+              <div
+                className="
 w-6
 h-6
 rounded-md
@@ -885,76 +862,76 @@ items-center
 justify-center
 shadow-sm
 "
->
+              >
 
-<Lightbulb
-size={13}
-className="text-indigo-600"
-/>
+                <Lightbulb
+                  size={13}
+                  className="text-indigo-600"
+                />
 
-</div>
+              </div>
 
 
-<span className="
+              <span className="
 text-xs
 font-semibold
 text-gray-800
 ">
-Tips
-</span>
+                Tips
+              </span>
 
 
-</div>
+            </div>
 
 
-<p
-className="
+            <p
+              className="
 text-[11px]
 text-gray-600
 leading-relaxed
 "
->
-Try different questions to see how your bot responds.
-Make sure your training data covers important topics.
-</p>
+            >
+              Try different questions to see how your bot responds.
+              Make sure your training data covers important topics.
+            </p>
 
 
-</div>
-
-
-
+          </div>
 
 
 
 
 
-{/* Questions */}
 
 
-<div>
+
+          {/* Questions */}
 
 
-<h2
-className="
+          <div>
+
+
+            <h2
+              className="
 text-[12px]
 font-semibold
 text-gray-800
 mb-2
 "
->
-Quick Questions
-</h2>
+            >
+              Quick Questions
+            </h2>
 
 
-<div className="space-y-2">
+            <div className="space-y-2">
 
 
-{
-QUICK_QUESTIONS.map((q)=>(
-<button
-key={q}
-onClick={()=>sendMessage(q)}
-className="
+              {
+                QUICK_QUESTIONS.map((q) => (
+                  <button
+                    key={q}
+                    onClick={() => sendMessage(q)}
+                    className="
 w-full
 text-left
 px-3.5
@@ -970,23 +947,23 @@ hover:border-indigo-300
 hover:bg-indigo-50/50
 transition
 "
->
+                  >
 
-{q}
+                    {q}
 
-</button>
-))
-}
-
-
-</div>
+                  </button>
+                ))
+              }
 
 
-</div>
+            </div>
+
+
+          </div>
 
 
 
-</div>
+        </div>
       </div>
     </div>
   );

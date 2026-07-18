@@ -109,3 +109,18 @@ section {
   margin-inline: auto;
   padding-inline: 2rem;
 }
+
+/* ── Scrollbar Hide Utility ────────────────────────────────────────────────── */
+/* Hides the visible scrollbar while keeping scroll functionality intact.      */
+
+.scrollbar-hide {
+  /* Firefox */
+  scrollbar-width: none;
+  /* IE / Legacy Edge */
+  -ms-overflow-style: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  /* Chrome / Safari / Edge */
+  display: none;
+}
