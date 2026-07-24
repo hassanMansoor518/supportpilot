@@ -16,8 +16,8 @@
     welcomeMessage: 'Welcome to our support. How can we help today?'
   };
 
-  const API_URL = "http://localhost:3000/api/Chat";
-  const INIT_URL = "http://localhost:3000/api/chatbot/init";
+  const API_URL = "https://supportpilot-lilac.vercel.app/api/Chat";
+  const INIT_URL = "https://supportpilot-lilac.vercel.app/api/chatbot/init";
   const STORAGE_KEY = `chatbot_state_${config.chatbotKey || 'default'}`;
 
   // Default icons
