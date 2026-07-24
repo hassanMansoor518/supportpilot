@@ -100,7 +100,7 @@ export default function IntegrationsContent({ ownerId }: { ownerId: string }) {
 
       <div className="space-y-6">
         {chatbots.map((bot) => {
-          const embedCode = `<script\n  src="http://localhost:3000/chatBot.js"\n  data-chatbot-key="${bot.chatbotKey}">\n</script>`;
+          const embedCode = `<script\n  src="https://supportpilot-lilac.vercel.app/chatBot.js"\n  data-chatbot-key="${bot.chatbotKey}">\n</script>`;
           const isCopied = copiedKeys[bot.chatbotKey];
 
           return (
@@ -141,7 +141,7 @@ export default function IntegrationsContent({ ownerId }: { ownerId: string }) {
                       <br />
                       <span className="ml-4 text-blue-300">src</span>
                       <span className="text-slate-500">=</span>
-                      <span className="text-emerald-400">"http://localhost:3000/chatBot.js"</span>
+                      <span className="text-emerald-400">"https://supportpilot-lilac.vercel.app/chatBot.js"</span>
                       <br />
                       <span className="ml-4 text-blue-300">data-chatbot-key</span>
                       <span className="text-slate-500">=</span>
